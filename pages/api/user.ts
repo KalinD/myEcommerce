@@ -12,6 +12,11 @@ interface RequestBody {
 const ROUNDS = 10
 
 export default async function Post(request: NextApiRequest, response: NextApiResponse) {
+    if(request.method !== 'POST'){
+        response.status(400).send(JSON.stringify({error: 'Only POST requests allowed on this route!'}))
+        return
+    }
+
     const body: RequestBody = await request.body;
 
     const user = await prisma.user.create({
@@ -25,5 +30,4 @@ export default async function Post(request: NextApiRequest, response: NextApiRes
 
     const { password, ...result } = user;
     response.send(result)
-    // return new Response(JSON.stringify(result));
 }

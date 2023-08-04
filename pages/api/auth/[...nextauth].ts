@@ -1,9 +1,11 @@
-import NextAuth, { NextAuthOptions } from "next-auth"
+import NextAuth from "next-auth/next"
+import { NextAuthOptions } from "next-auth"
 import GithubProvider from "next-auth/providers/github"
 import CredentialsProvider from "next-auth/providers/credentials";
 import { PrismaAdapter } from "@auth/prisma-adapter";
 import prisma from "@/lib/prisma";
 import type { Adapter } from 'next-auth/adapters';
+import { AnyRecord } from "dns";
 
 export const authOptions: NextAuthOptions = {
   // Configure one or more authentication providers
@@ -30,7 +32,6 @@ export const authOptions: NextAuthOptions = {
         })
 
         const user = await res.json()
-        console.log('User: ' + user)
         if (user) {
           // Any object returned will be saved in `user` property of the JWT
           return user
@@ -50,7 +51,19 @@ export const authOptions: NextAuthOptions = {
   ],
   adapter: PrismaAdapter(prisma) as Adapter,
   pages: {
-    signIn: '/login',
+    signIn: '/auth/signin',
+  },
+  session: {
+    strategy: "jwt",
+  },
+  callbacks: {
+    async jwt({token, user}){
+      return {...token, ...user}
+    },
+    async session({session, token}){
+      session.user = token as any
+      return session
+    }
   }
 }
 

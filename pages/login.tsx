@@ -11,14 +11,15 @@ export default function Login() {
   const [password, setPassword] = useState("");
   const router = useRouter();
   const { data: session } = useSession();
-
   const onSubmit = async (e: FormEvent) => {
     e.preventDefault();
 
-    // const result = await signIn("credentials", {
-    //   emailOrUsername: emailOrUsername,
-    //   password: password,
-    // });
+    await signIn("credentials", {
+      emailOrUsername: emailOrUsername,
+      password: password,
+      callbackUrl: '/',
+      redirect: true
+    });
   };
 
   return (

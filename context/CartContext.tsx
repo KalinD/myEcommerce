@@ -43,16 +43,10 @@ export const CartProvider = ({ children }: { children: ReactElement }) => {
   const [products, setProducts] = useState<Product[]>([]);
   const [count, setCount] = useState(0);
 
-  useEffect(() => {
-    console.log(products);
-  }, [products]);
-
   const addProduct = (product: Product) => {
-    console.log(product)
     if (products.find((p) => p.id === product.id)) {
       const productsCopy = [...products];
       const p = productsCopy.find((p) => (p.id === product.id));
-      console.log(p);
 
       if (p) {
         p.amount += 1;

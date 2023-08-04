@@ -18,6 +18,7 @@ const Navbar = () => {
 
   return (
     <div>
+      {session?.user && <div>{session.user.name}</div>}
       {isMobile && (
         <div className="fixed z-50 top-2 right-2 cursor-pointer">
           {open ? (

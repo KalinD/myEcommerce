@@ -2,6 +2,7 @@ import { useAuth } from "@/context/AuthContext";
 import React, { FormEvent, useState } from "react";
 import InputField from "@/components/InputField";
 import SubmitButton from "@/components/SubmitButton";
+import { signIn } from "next-auth/react";
 
 interface RegisterFields {
   username: {
@@ -19,20 +20,49 @@ interface RegisterFields {
 }
 
 export default function Register() {
+  const [name, setName] = useState("");
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [password2, setPassword2] = useState("");
   const { register } = useAuth();
 
-  const handleRegister = (e: FormEvent) => {
+  const handleRegister = async (e: FormEvent) => {
     e.preventDefault();
-    register(username, email, password, password2);
+
+    const res = await fetch("/api/user", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        name,
+        username,
+        email,
+        password,
+      }),
+    });
+
+    if (await res.json()) {
+      await signIn("credentials", {
+        emailOrUsername: username,
+        password: password,
+        callbackUrl: '/',
+        redirect: true
+      });
+    }
   };
 
   return (
     <div className="w-fit mx-auto bg-accent bg-opacity-75 p-8 mt-16 rounded text-black">
       <form onSubmit={handleRegister} className="flex flex-col gap-3">
+        <InputField
+          type="text"
+          name="name"
+          value={name}
+          setValue={setName}
+          placeholder="Enter Name"
+        />
         <InputField
           type="text"
           name="username"
@@ -65,4 +95,4 @@ export default function Register() {
       </form>
     </div>
   );
-};
+}

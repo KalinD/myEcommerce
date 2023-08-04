@@ -83,7 +83,6 @@ export const getStaticProps: GetStaticProps<{
   const prismaReq = await prisma.product.findFirst({
     where: { id: id },
   });
-  // console.log(prismaReq?.name)
   let product: Product = DEFAULT_PRODUCT;
   if(prismaReq){
     product = {...prismaReq, id: Number(prismaReq.id), altText: prismaReq.altText}
