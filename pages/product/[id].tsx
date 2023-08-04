@@ -11,7 +11,7 @@ import Button from "@/components/Button";
 import { useCart } from "@/context/CartContext";
 
 type Product = {
-  id: number;
+  id: string;
   name: string;
   image: string;
   altText: string;
@@ -20,7 +20,7 @@ type Product = {
 };
 
 const DEFAULT_PRODUCT: Product = {
-  id: 0,
+  id: '',
   name: 'Not Found',
   image: 'Not Found',
   altText: 'Not Found',
@@ -85,7 +85,7 @@ export const getStaticProps: GetStaticProps<{
   });
   let product: Product = DEFAULT_PRODUCT;
   if(prismaReq){
-    product = {...prismaReq, id: Number(prismaReq.id), altText: prismaReq.altText}
+    product = {...prismaReq, id: prismaReq.id, altText: prismaReq.altText}
   }
   return { props: { product: { ...product } } };
 };

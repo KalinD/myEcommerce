@@ -5,7 +5,7 @@ import Button from "./Button";
 import Link from "next/link";
 
 type Product = {
-  id: number;
+  id: string;
   name: string;
   image: string;
   altText: string;

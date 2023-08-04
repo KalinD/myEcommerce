@@ -7,7 +7,7 @@ import {
 } from "react";
 
 type Product = {
-  id: number;
+  id: string;
   name: string;
   image: string;
   altText: string;

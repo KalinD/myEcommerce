@@ -4,7 +4,7 @@ import prisma from "@/lib/prisma";
 
 // const inter = Inter({ subsets: ["latin"] });
 type ProductType = {
-  id: number;
+  id: string;
   name: string;
   image: string;
   altText: string;
@@ -30,7 +30,7 @@ export const getStaticProps: GetStaticProps = async () => {
   const database_products = await prisma.product.findMany();
   const products = database_products.map((p) => {
     let product = {
-      id: Number(p.id),
+      id: p.id,
       name: p.name,
       image: p.image,
       altText: p.altText,
