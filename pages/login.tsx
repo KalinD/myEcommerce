@@ -17,18 +17,19 @@ const loginSchema = z.object({
 })
 
 export default function Login() {
-  const { register, handleSubmit } = useForm<Inputs>({
+  const { register, handleSubmit, watch } = useForm<Inputs>({
     defaultValues: {
       emailOrUsername: "",
       password: "",
     },
     resolver: zodResolver(loginSchema),
   });
+
   return (
     <div className="w-fit mx-auto bg-accent bg-opacity-75 p-8 mt-16 rounded text-black">
       <form
         onSubmit={handleSubmit(async (data) => {
-          await signIn("credentials", {
+          const res = await signIn("credentials", {
             emailOrUsername: data.emailOrUsername,
             password: data.password,
             callbackUrl: "/",

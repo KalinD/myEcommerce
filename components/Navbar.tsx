@@ -18,7 +18,6 @@ const Navbar = () => {
 
   return (
     <div>
-      {session?.user && <div>{session.user.name}</div>}
       {isMobile && (
         <div className="fixed z-50 top-2 right-2 cursor-pointer">
           {open ? (
@@ -61,10 +60,10 @@ const Navbar = () => {
             </NavLink>
           </>
         )}
-        <NavLink href={"/cart"} onClick={() => setOpen(false)}>
+        <NavLink href={"/cart"} onClick={() => setOpen(false)} className='pr-8 relative hover-underline-animation p-2 text-lg md:text-xl'>
           Cart{" "}
           {count > 0 ? (
-            <span className="rounded-full bg-accent text-white px-2 text-center">
+            <span className="absolute right-0 rounded-full h-fit bg-accent text-white px-2 text-center">
               {count}
             </span>
           ) : (
@@ -81,7 +80,7 @@ const Navbar = () => {
             >
               Logout
             </NavLink>
-            <NavLink href={"/user"} onClick={() => setOpen(false)}>
+            <NavLink href={`/user/${session.user.username}`} onClick={() => setOpen(false)}>
               User
             </NavLink>
           </>

@@ -14,26 +14,22 @@ model Product {
   altText     String
   description String
   price       Float
-  carts       Cart[]
-  orders      Order[]
+  carts       Cart[]  @relation("CartToProduct")
+  orders      Order[] @relation("OrderToProduct")
 }
 
 model Cart {
-  id        String @id @default(cuid())
-  productId String
-  userId    String
-
-  products Product @relation(fields: [productId], references: [id], onDelete: Cascade)
-  users    User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  id       String    @id @default(cuid())
+  userId   String
+  users    User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  products Product[] @relation("CartToProduct")
 }
 
 model Order {
-  id        String @id @default(cuid())
-  userId    String
-  productId String
-
-  user     User    @relation(fields: [userId], references: [id], onDelete: Cascade)
-  products Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+  id       String    @id @default(cuid())
+  userId   String
+  user     User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  products Product[] @relation("OrderToProduct")
 }
 
 model Account {
@@ -42,15 +38,14 @@ model Account {
   type              String
   provider          String
   providerAccountId String
-  refresh_token     String? @db.Text
-  access_token      String? @db.Text
+  refresh_token     String?
+  access_token      String?
   expires_at        Int?
   token_type        String?
   scope             String?
-  id_token          String? @db.Text
+  id_token          String?
   session_state     String?
-
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([provider, providerAccountId])
 }
@@ -66,15 +61,15 @@ model Session {
 model User {
   id            String    @id @default(cuid())
   name          String?
-  username      String?   @unique
-  password      String?
   email         String?   @unique
   emailVerified DateTime?
   image         String?
+  password      String?
+  username      String?   @unique
   accounts      Account[]
-  sessions      Session[]
   carts         Cart[]
   orders        Order[]
+  sessions      Session[]
 }
 
 model VerificationToken {

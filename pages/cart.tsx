@@ -1,7 +1,9 @@
 import Button from "@/components/Button";
 import { useCart } from "@/context/CartContext";
+import prisma from "@/lib/prisma";
+import { useSession } from "next-auth/react";
 import Image from "next/image";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, MouseEventHandler } from "react";
 
 export default function Cart() {
   const {
@@ -12,12 +14,24 @@ export default function Cart() {
     addProduct,
     count,
     getTotalCost,
+    // handlePurchase
   } = useCart();
   const [totalAmount, setTotalAmount] = useState(getTotalCost());
 
   useEffect(() => {
     setTotalAmount(getTotalCost());
   }, [count]);
+
+  const handlePurchase = async () => {
+    const res = await fetch('/api/purchase', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(products.map(p => p.id))
+    })
+  }
+  
 
   return (
     <div className="py-10 h-full">
@@ -61,10 +75,10 @@ export default function Cart() {
                           (product.name.length > 25 ? "..." : "")}
                       </td>
                       <td className="border-t border-accent">
-                        {product.price}
+                        {product.price.toFixed(2)}€
                       </td>
                       <td className="border-t border-accent">
-                        {product.price * product.amount}
+                        {(product.price * product.amount).toFixed(2)}€
                       </td>
                       <td className="border-t border-accent">
                         <button onClick={() => addProduct(product)}>+</button>
@@ -89,7 +103,7 @@ export default function Cart() {
               Total amount: {totalAmount.toFixed(2)}€
             </div>
             <div>
-              <Button onClick={() => {}}>Purchase</Button>
+              <Button onClick={handlePurchase}>Purchase</Button>
             </div>
           </div>
         </div>

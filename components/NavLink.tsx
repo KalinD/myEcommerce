@@ -4,6 +4,7 @@ import React, { ReactNode } from "react";
 type NavLinkProp = {
   href?: string;
   children: ReactNode;
+  className?: string;
   onClick: () => void;
 };
 

@@ -26,7 +26,7 @@ const CreateProduct = () => {
     };
     const body = formData;
     const res = await axios.post(
-      "http://localhost:8000/api/product/",
+      "http://127.0.0.1:8000/api/product/",
       body,
       config
     );

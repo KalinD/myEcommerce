@@ -56,7 +56,6 @@ const registerSchema = z
     <div className="w-fit mx-auto bg-accent bg-opacity-75 p-8 mt-16 rounded text-black">
       <form
         onSubmit={handleSubmit(async (data) => {
-          console.log(data)
           const res = await fetch("/api/user", {
             method: "POST",
             headers: {

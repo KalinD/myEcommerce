@@ -82,7 +82,7 @@ export const AuthProvider = ({ children }: { children: ReactElement }) => {
     password2: string
   ) => {
     setLoading(true);
-    const response = await fetch("http://localhost:8000/api/register/", {
+    const response = await fetch("http://127.0.0.1:8000/api/register/", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -116,7 +116,7 @@ export const AuthProvider = ({ children }: { children: ReactElement }) => {
   };
 
   let updateToken = async () => {
-    let response = await fetch("http://localhost:8000/api/token/refresh/", {
+    let response = await fetch("http://127.0.0.1:8000/api/token/refresh/", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

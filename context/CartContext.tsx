@@ -4,6 +4,7 @@ import {
   useState,
   useContext,
   useEffect,
+  MouseEventHandler,
 } from "react";
 
 type Product = {
@@ -24,6 +25,7 @@ export interface CartState {
   removeAllProduct: (product: Product) => void;
   clearCart: () => void;
   getTotalCost: () => number;
+  handlePurchase: () => void;
 }
 
 const defaultState: CartState = {
@@ -34,6 +36,7 @@ const defaultState: CartState = {
   removeAllProduct: () => {},
   clearCart: () => {},
   getTotalCost: () => 0,
+  handlePurchase: () => {},
 };
 
 const CartContext = createContext<CartState>(defaultState);
@@ -58,6 +61,16 @@ export const CartProvider = ({ children }: { children: ReactElement }) => {
     setCount((oldCount) => oldCount + 1);
   };
 
+  const handlePurchase = async () => {
+    const res = await fetch('/api/purchase', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(products.map(p => ({id: p.id})))
+    })
+  }
+
   const removeOneProduct = (product: Product) => {
     if (products.filter((p) => p.id === product.id)) {
       const productsCopy = [...products];
@@ -80,14 +93,6 @@ export const CartProvider = ({ children }: { children: ReactElement }) => {
     return sum;
   };
 
-  //   const addOneProduct = (product: Product) => {
-  //     setProducts((prevProducts) => {
-  //       const index = prevProducts.indexOf(product);
-  //       return prevProducts.splice(index, 1);
-  //     });
-  //     setCount((prevCount) => prevCount + 1);
-  //   };
-
   const removeAllProduct = (product: Product) => {
     setCount((prevCount) => prevCount - product.amount);
     setProducts((prevProducts) => prevProducts.filter((p) => p != product));
@@ -106,6 +111,7 @@ export const CartProvider = ({ children }: { children: ReactElement }) => {
     removeAllProduct,
     clearCart,
     getTotalCost,
+    handlePurchase
   };
 
   return (

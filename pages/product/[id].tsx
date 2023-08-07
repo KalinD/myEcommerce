@@ -53,7 +53,7 @@ const ProductPage = ({
       <div className="flex flex-col md:flex-row">
         <div className="relative w-fit h-fit px-10 md:px-0">
           <Image
-            src={`http://localhost:8000/${product.image}`}
+            src={product.image}
             alt={product.altText}
             width={400}
             height={400}
