@@ -4,12 +4,12 @@
 
 
 :root {
-  --white-color: '#ffffff';
-  --text-color: '#000000';
-  --background-color: '#fdfefb';
-  --primary-color: '#241155';
-  --secondary-color: '#e9c3f3';
-  --accent-color: '#2749c4';
+  --white-color: #ffffff;
+  --text-color: #000000;
+  --background-color: #fdfefb;
+  --primary-color: #241155;
+  --secondary-color: #e9c3f3;
+  --accent-color: #2749c4;
 }
 
 
@@ -24,6 +24,28 @@ body {
     hsl(80 60% 99%) 100%
   );
 }
+
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: var(--secondary-color);
+  border-radius: 5px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: var(--accent-color);
+}
+
 
 @layer components {
   /* This won't be included in your compiled CSS unless you actually use it */

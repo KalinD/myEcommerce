@@ -1,9 +1,7 @@
 import prisma from "@/lib/prisma";
 import { NextApiRequest, NextApiResponse } from "next";
 import { getServerSession } from "next-auth/next";
-import { getSession } from "next-auth/react";
 import { authOptions } from "./auth/[...nextauth]";
-import { string } from "zod";
 
 export default async function Post(request: NextApiRequest, response: NextApiResponse) {
     const session = await getServerSession(request, response, authOptions)
@@ -27,5 +25,5 @@ export default async function Post(request: NextApiRequest, response: NextApiRes
         response.send(JSON.stringify(order))
         return
     }
-    response.send(JSON.stringify({ message: 'User must be logged in!' }))
+    response.status(401).send(JSON.stringify({ message: 'User must be logged in!' }))
 }

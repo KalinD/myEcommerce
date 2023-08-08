@@ -1,6 +1,8 @@
 import { GetStaticProps, InferGetServerSidePropsType } from "next";
 import Product from "@/components/Product";
 import prisma from "@/lib/prisma";
+import { useState } from "react";
+import Button from "@/components/Button";
 
 // const inter = Inter({ subsets: ["latin"] });
 type ProductType = {
@@ -12,15 +14,42 @@ type ProductType = {
   price: number;
 };
 
+const PRODUCTS_PER_PAGE = 8;
+
 export default function Home({
   products,
 }: InferGetServerSidePropsType<typeof getStaticProps>) {
+  const [page, setPage] = useState<number>(0);
+
   return (
-    <main className="flex flex-col items-center justify-between p-10 md:px-24 ">
-      <div className="grid grid-cols-1 gap-2 md:grid-cols-2 lg:grid-cols-4 lg:gap-4 ">
-        {products.map((product: ProductType) => (
-          <Product key={product.id} {...product} />
-        ))}
+    <main className="flex flex-col-reverse md:flex-col items-center p-12 md:px-24 h-screen">
+      <div className="flex flex-row w-full justify-end">
+        <div>
+          <Button
+            disabled={page === 0}
+            onClick={() => setPage((prevPage) => prevPage - 1)}
+          >
+            {"<"}
+          </Button>
+        </div>
+        <div>{page + 1}</div>
+        <div>
+          <Button
+            disabled={
+              page + 1 === Math.ceil(products.length / PRODUCTS_PER_PAGE)
+            }
+            onClick={() => setPage((prevPage) => prevPage + 1)}
+          >
+            {">"}
+          </Button>
+        </div>
+      </div>
+      <div className="grid grid-cols-1 gap-2 md:grid-cols-2 lg:grid-cols-4 lg:gap-4 overflow-y-scroll overflow-x-hidden">
+        {products
+          .slice(PRODUCTS_PER_PAGE * page, PRODUCTS_PER_PAGE * (page + 1))
+          .map((product: ProductType) => (
+            <Product key={product.id} {...product} />
+          ))}
       </div>
     </main>
   );
