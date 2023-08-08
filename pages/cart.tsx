@@ -44,7 +44,7 @@ export default function Cart() {
         <div className="flex flex-col">
           <div>
             <table className="w-full border-collapse text-center">
-              <thead className="w-full table-fixed table ">
+              <thead className="w-full table-fixed table">
                 <tr>
                   <th colSpan={2}>Item</th>
                   <th>Single Price</th>

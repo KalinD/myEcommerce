@@ -9,8 +9,8 @@ interface RequestBody {
   password: string;
 }
 
-export default async function Post(req: NextApiRequest, res: NextApiResponse) {
-  const body: RequestBody = await req.body;
+export default async function Post(request: NextApiRequest, response: NextApiResponse) {
+  const body: RequestBody = await request.body;
 
   const user = await prisma.user.findFirst({
     where: {
@@ -24,8 +24,8 @@ export default async function Post(req: NextApiRequest, res: NextApiResponse) {
       ...userWithoutPass,
       accessToken
     }
-    res.send(JSON.stringify(result))
+    response.send(JSON.stringify(result))
     return
   }
-  res.send(JSON.stringify(null))
+  response.send(JSON.stringify(null))
 }

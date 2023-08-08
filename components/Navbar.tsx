@@ -44,9 +44,11 @@ const Navbar = () => {
           isMobile ? mobileClasses : desktopClasses
         }`}
       >
-        {/* <Link className="hover:text-blue-700 p-2" href={"/createProduct"}>
-        Add Product
-      </Link> */}
+        {session?.user.role === "ADMIN" && (
+          <NavLink onClick={() => setOpen(false)} href="/products">
+            Products
+          </NavLink>
+        )}
         <NavLink href={"/"} onClick={() => setOpen(false)}>
           Home
         </NavLink>
@@ -60,7 +62,11 @@ const Navbar = () => {
             </NavLink>
           </>
         )}
-        <NavLink href={"/cart"} onClick={() => setOpen(false)} className='pr-8 relative hover-underline-animation p-2 text-lg md:text-xl'>
+        <NavLink
+          href={"/cart"}
+          onClick={() => setOpen(false)}
+          className="pr-8 relative hover-underline-animation p-2 text-lg md:text-xl"
+        >
           Cart{" "}
           {count > 0 ? (
             <span className="absolute right-0 rounded-full h-fit bg-accent text-white px-2 text-center">
@@ -80,7 +86,10 @@ const Navbar = () => {
             >
               Logout
             </NavLink>
-            <NavLink href={`/user/${session.user.username}`} onClick={() => setOpen(false)}>
+            <NavLink
+              href={`/user/${session.user.username}`}
+              onClick={() => setOpen(false)}
+            >
               User
             </NavLink>
           </>
