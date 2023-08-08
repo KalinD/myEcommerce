@@ -1,4 +1,5 @@
 import React, { ReactNode } from "react";
+import { twMerge } from 'tailwind-merge'
 
 type ButtonProps = {
   children: ReactNode;
@@ -19,11 +20,7 @@ const Button = ({
     <button
       role={role}
       disabled={disabled}
-      className={
-        className
-          ? className
-          : "bg-primary text-white px-2 py-1 md:py-2 md:px-3 lg:px-4 rounded-full"
-      }
+      className={twMerge("bg-primary text-white px-2 py-1 md:py-2 md:px-3 lg:px-4 rounded-full", className)}
       onClick={onClick}
     >
       {children}

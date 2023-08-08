@@ -1,3 +1,4 @@
+import { UserRole } from "@prisma/client";
 import NextAuth from "next-auth";
 
 declare module 'next-auth'{
@@ -6,6 +7,7 @@ declare module 'next-auth'{
             id: string;
             name: string;
             email: string;
+            role: UserRole
             username: string;
             accessToken: string;
         }
