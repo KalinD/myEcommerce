@@ -1,8 +1,9 @@
 import prisma from "@/lib/prisma";
 import { NextApiRequest, NextApiResponse } from "next";
 import { getServerSession } from "next-auth";
-import { authOptions } from "./auth/[...nextauth]";
+import { authOptions } from "../auth/[...nextauth]";
 import { UserRole } from "@prisma/client";
+import fs from 'fs'
 
 interface RequestBody {
     name: string;
@@ -12,10 +13,13 @@ interface RequestBody {
     price: number;
 }
 
-export default async function handle(request: NextApiRequest, response: NextApiResponse) {
-    const session = await getServerSession(authOptions)
+const UPLOAD_URL = './public/images/'
+const IMAGES_URL = '/images/'
 
-    if (!session.user) {
+export default async function handler(request: NextApiRequest, response: NextApiResponse) {
+    const session = await getServerSession(request, response, authOptions)
+
+    if (!session?.user) {
         response.status(401).send(JSON.stringify({ error: 'You first must log in!' }))
         return
     }
@@ -30,7 +34,10 @@ export default async function handle(request: NextApiRequest, response: NextApiR
                 id: id as string
             }
         })
-        if (deletedProducts) response.status(204).send({})
+        if (deletedProducts) {
+            fs.unlinkSync(`${UPLOAD_URL}/${deletedProducts.image.split('/')[2]}`)
+            response.status(204).send(null)
+        }
         else response.status(404).send({ message: 'Product was not found! Make sure you delete an existing product.' })
     } else if (request.method === 'PUT') {
         const body: RequestBody = request.body
@@ -65,7 +72,9 @@ export default async function handle(request: NextApiRequest, response: NextApiR
     //     response.status(201).send(product)
     // }
     else {
-        response.status(405).send({message: 'Method Not Allowed!'})
+        response.status(405).send({ message: 'Method Not Allowed!' })
     }
 
 }
+
+// export { handler as DELETE, handler as PUT }

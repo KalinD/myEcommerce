@@ -1,13 +1,11 @@
-import { useAuth } from "@/context/AuthContext";
-import React, { ChangeEvent, FormEvent, useEffect, useState } from "react";
-import axios from "axios";
+import React, { ChangeEvent, FormEvent, useState } from "react";
+
 const CreateProduct = () => {
   const [name, setName] = useState("");
   const [description, setDescription] = useState("");
   const [price, setPrice] = useState(0);
-  const [image, setImage] = useState<File | null>(null);
+  const [image, setImage] = useState<Blob>();
   const [altText, setAltText] = useState("");
-  const { authTokens } = useAuth();
 
   const handleCreate = async (e: FormEvent) => {
     e.preventDefault();
@@ -16,7 +14,7 @@ const CreateProduct = () => {
     formData.append("description", description);
     formData.append("price", String(price));
     formData.append("altText", altText);
-    formData.append("image", image);
+    formData.append("image", image as Blob);
 
     
     const res = await fetch("/api/product", {
@@ -35,11 +33,11 @@ const CreateProduct = () => {
     setAltText("");
     setPrice(0);
     setDescription("");
-    setImage(null);
+    setImage(undefined);
   };
 
   const onFileChange = (e: ChangeEvent<HTMLInputElement>) =>
-    setImage(e.target.files ? e.target.files[0] : null);
+    setImage(e.target.files ? e.target.files[0] : undefined);
 
   return (
     <div className="w-fit mx-auto bg-blue-500 p-8 mt-16 rounded text-black">

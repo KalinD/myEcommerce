@@ -2,7 +2,7 @@ import { VerifyJwt } from "@/lib/jwt";
 import prisma from "@/lib/prisma";
 import { NextApiRequest, NextApiResponse } from "next";
 
-export default async function Get(req: NextApiRequest, res: NextApiResponse) {
+export default async function handler(req: NextApiRequest, res: NextApiResponse) {
     const { username } = req.query
     if (!req.headers.authorization || req.headers.authorization.split(' ')[0] !== 'Bearer') {
         res.status(401).send(JSON.stringify({ error: 'Unauthorized' }))

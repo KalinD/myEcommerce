@@ -5,14 +5,15 @@ import prisma from "@/lib/prisma";
 import { UserRole } from "@prisma/client";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
-import React from "react";
+import React, { useState } from "react";
 
 type ProductProps = {
-  products: Product[];
+  ps: Product[];
 };
 
-const Products = ({ products }: ProductProps) => {
+const Products = ({ ps }: ProductProps) => {
   const { data: session, status } = useSession();
+  const [products, setProducts] = useState<Product[]>(ps)
   const router = useRouter()
 
   if(status === 'loading'){
@@ -39,8 +40,8 @@ const Products = ({ products }: ProductProps) => {
           </tr>
         </thead>
         <tbody className="block h-full pb-10 overflow-auto w-full table-fixed">
-          {products.map((p) => (
-            <TableProduct p={p} key={`product-${p.id}`} />
+          {ps.map((p) => (
+            <TableProduct p={p} setProducts={setProducts} key={`product-${p.id}`} />
           ))}
         </tbody>
       </table>
@@ -51,11 +52,11 @@ const Products = ({ products }: ProductProps) => {
 export default Products;
 
 export const getStaticProps = async () => {
-  const products = await prisma.product.findMany();
+  const ps = await prisma.product.findMany();
 
   return {
     props: {
-      products,
+      ps,
     },
   };
 };

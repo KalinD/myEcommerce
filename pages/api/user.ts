@@ -11,7 +11,7 @@ interface RequestBody {
 
 const ROUNDS = 10
 
-export default async function Post(request: NextApiRequest, response: NextApiResponse) {
+export default async function handler(request: NextApiRequest, response: NextApiResponse) {
     if(request.method !== 'POST'){
         response.status(400).send(JSON.stringify({error: 'Only POST requests allowed on this route!'}))
         return

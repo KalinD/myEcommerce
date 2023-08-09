@@ -1,6 +1,7 @@
 import { PrismaClient } from '@prisma/client'
 import { NumericLiteral } from 'typescript';
 const prisma = new PrismaClient()
+import fs from 'fs'
 
 type APIProducts = {
     id: number;
@@ -11,16 +12,27 @@ type APIProducts = {
     image: string;
 }
 
+const IMAGES_URL = './public/images'
+
 async function main() {
     const res = await fetch('https://fakestoreapi.com/products')
     const products: APIProducts[] = await res.json()
 
     products.forEach(async (product) => {
         console.log("Started seeding...")
+        const response = await fetch(product.image);
+        const fileName = product.image.split('/')[product.image.split('/').length - 1]
+        const blobImage = await response.blob();
+        const href = URL.createObjectURL(blobImage);
+
+        fs.writeFile(`${IMAGES_URL}/${fileName}`, href, (err) => {
+            if (err) throw err;
+        });
+
         const p = await prisma.product.create({
             data: {
                 name: product.title,
-                image: product.image,
+                image: `${IMAGES_URL}/${fileName}`,
                 price: product.price,
                 description: product.description,
                 altText: product.title

@@ -53,7 +53,7 @@ const Product = ({ id, name, image, description, altText, price }: Product) => {
             <div className="flex justify-center">
               <div className="relative h-60 w-60">
                 <Image
-                  src={`${image}`}
+                  src={image}
                   alt={altText}
                   fill
                   unoptimized={true}

@@ -32,18 +32,25 @@ export const config = {
     },
 };
 
-const IMAGES_URL = './images'
+const UPLOAD_URL = './public/images'
+const IMAGES_URL = '/images'
 
-export default async function Post(request: NextApiRequest, response: NextApiResponse) {
+export default async function handler(request: NextApiRequest, response: NextApiResponse) {
+    const session = await getServerSession(request, response, authOptions)
+
+    if (request.method !== 'POST') {
+        response.status(400).send(JSON.stringify({ error: 'Only POST requests allowed on this route!' }))
+        return
+    }
+    if (session?.user.role !== UserRole.ADMIN){
+        response.status(401).send(JSON.stringify({ error: 'Only ADMINs are allowed on this route!' }))
+    }
+    
     const form = new multiparty.Form();
     form.on('file', (name, file) => {
-        console.log(JSON.stringify(file))
-        console.log(JSON.stringify(name))
         if(file){
-            console.log(file.image)
-            fs.rename(file.path, `${IMAGES_URL}/${file.originalFilename}`, () => {})
-        }
-        // fs.writeFile(`${IMAGES_URL}/${file.originalFilename}`, JSON.stringify(file), () => {})    
+            fs.renameSync(file.path, `${UPLOAD_URL}/${file.originalFilename}`)
+        }  
     })
     const data: RequestBody = await new Promise((resolve, reject) => {
         form.parse(request, function (err, fields, files) {
@@ -51,17 +58,6 @@ export default async function Post(request: NextApiRequest, response: NextApiRes
             resolve({ fields, files });
         });
     });
-    console.log(`data: `, data);
-    console.log(`data: `, JSON.stringify(data));
-    // const session = await getServerSession(authOptions)
-
-    if (request.method !== 'POST') {
-        response.status(400).send(JSON.stringify({ error: 'Only POST requests allowed on this route!' }))
-        return
-    }
-    // if (session?.user.role !== UserRole.ADMIN){
-    //     response.status(401).send(JSON.stringify({ error: 'Only ADMINs are allowed on this route!' }))
-    // }
 
     const product = await prisma.product.create({
         data: {
