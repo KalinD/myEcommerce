@@ -16,22 +16,16 @@ const CreateProduct = () => {
     formData.append("description", description);
     formData.append("price", String(price));
     formData.append("altText", altText);
-    formData.append("image", String(image));
-    const config = {
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "multipart/form-data",
-        Authorization: `Bearer ${authTokens?.access}`,
-      },
-    };
-    const body = formData;
-    const res = await axios.post(
-      "http://127.0.0.1:8000/api/product/",
-      body,
-      config
-    );
+    formData.append("image", image);
+
+    
+    const res = await fetch("/api/product", {
+      method: "POST",
+      body: formData,
+    });
+
+    // 201 - Created
     if (res.status === 201) {
-      // 201 - Created
       clearFields();
     }
   };
@@ -44,7 +38,8 @@ const CreateProduct = () => {
     setImage(null);
   };
 
-  const onFileChange = (e: ChangeEvent<HTMLInputElement>) => setImage(e.target.files ? e.target.files[0] : null);
+  const onFileChange = (e: ChangeEvent<HTMLInputElement>) =>
+    setImage(e.target.files ? e.target.files[0] : null);
 
   return (
     <div className="w-fit mx-auto bg-blue-500 p-8 mt-16 rounded text-black">
