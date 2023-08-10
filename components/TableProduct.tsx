@@ -29,7 +29,7 @@ const productSchema = z.object({
 });
 
 export const TableProduct = ({ p, setProducts }: TableProductProps) => {
-  const { register, handleSubmit, watch } = useForm<Product>({
+  const { register } = useForm<Product>({
     defaultValues: {
       name: p.name,
       description: p.description,
@@ -54,6 +54,7 @@ export const TableProduct = ({ p, setProducts }: TableProductProps) => {
       method: "PUT",
       body: formData,
     });
+    if(res.status === 200) router.reload()
   };
 
   const handleDelete = async () => {
@@ -65,7 +66,7 @@ export const TableProduct = ({ p, setProducts }: TableProductProps) => {
 
   return (
     <tr className="table-fixed border-t border-accent table h-48 w-full">
-      <td className="relative">
+      <td className="relative cursor-pointer">
         <Image
           src={product.image}
           alt={product.altText}
@@ -92,13 +93,14 @@ export const TableProduct = ({ p, setProducts }: TableProductProps) => {
         )}
       </td>
       <td>
-        <input placeholder="Product Name" {...register("name")} type="text" />
+        <input placeholder="Product Name" {...register("name")} type="text" onChange={(e) => setProduct(p => ({...p, name: e.target.value}))} />
       </td>
       <td>
         <div className="w-full h-full overflow-y-auto flex flex-col justify-center">
           <input
             placeholder="Product Description"
             {...register("description")}
+            onChange={(e) => setProduct(p => ({...p, description: e.target.value}))}
             type="text"
           />
         </div>
@@ -107,6 +109,7 @@ export const TableProduct = ({ p, setProducts }: TableProductProps) => {
         <input
           placeholder="Product Price"
           {...register("price")}
+          onChange={(e) => setProduct(p => ({...p, price: Number(e.target.value)}))}
           type="number"
         />
       </td>
@@ -114,6 +117,7 @@ export const TableProduct = ({ p, setProducts }: TableProductProps) => {
         <input
           placeholder="Accessibility text"
           {...register("altText")}
+          onChange={(e) => setProduct(p => ({...p, altText: e.target.value}))}          
           type="text"
         />
       </td>
