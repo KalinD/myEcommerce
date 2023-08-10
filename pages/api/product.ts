@@ -14,7 +14,7 @@ type ImageRequest = {
     size: number
 }
 
-interface RequestBody {
+export interface RequestBody {
     fields: {
         name: string[], 
         description: string[], 
@@ -47,7 +47,7 @@ export default async function handler(request: NextApiRequest, response: NextApi
     }
     
     const form = new multiparty.Form();
-    form.on('file', (name, file) => {
+    form.on('file', (_, file) => {
         if(file){
             fs.renameSync(file.path, `${UPLOAD_URL}/${file.originalFilename}`)
         }  
