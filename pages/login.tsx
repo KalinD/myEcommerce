@@ -17,7 +17,7 @@ const loginSchema = z.object({
 })
 
 export default function Login() {
-  const { register, handleSubmit, watch } = useForm<Inputs>({
+  const { register, handleSubmit } = useForm<Inputs>({
     defaultValues: {
       emailOrUsername: "",
       password: "",

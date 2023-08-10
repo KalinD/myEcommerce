@@ -9,17 +9,14 @@ type NavLinkProp = {
 };
 
 const NavLink = ({ href, children, onClick, ...rest }: NavLinkProp) => {
-  const classes = "hover-underline-animation p-2 text-lg md:text-xl"
+  const classes = "hover-underline-animation p-2 text-lg md:text-xl";
   if (href) {
     return (
-      <Link
-        className={classes}
-        onClick={onClick}
-        href={href}
-        {...rest}
-      >
-        {children}
-      </Link>
+      <li className="list-none">
+        <Link className={classes} onClick={onClick} href={href} {...rest}>
+          {children}
+        </Link>
+      </li>
     );
   }
   return (
