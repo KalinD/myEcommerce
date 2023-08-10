@@ -12,7 +12,8 @@ type APIProducts = {
     image: string;
 }
 
-const IMAGES_URL = './public/images'
+const UPLOAD_URL = './public/images'
+const IMAGES_URL = '/images'
 
 async function main() {
     const res = await fetch('https://fakestoreapi.com/products')
@@ -25,7 +26,7 @@ async function main() {
         const blobImage = await response.blob();
         const href = URL.createObjectURL(blobImage);
 
-        fs.writeFile(`${IMAGES_URL}/${fileName}`, href, (err) => {
+        fs.writeFile(`${UPLOAD_URL}/${fileName}`, href, (err) => {
             if (err) throw err;
         });
 
