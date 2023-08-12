@@ -3,8 +3,6 @@ import {
   createContext,
   useState,
   useContext,
-  useEffect,
-  MouseEventHandler,
 } from "react";
 
 type Product = {

@@ -3,6 +3,7 @@ import { useCart } from "@/context/CartContext";
 import prisma from "@/lib/prisma";
 import { useSession } from "next-auth/react";
 import Image from "next/image";
+import { useRouter } from "next/router";
 import React, { useState, useEffect, MouseEventHandler } from "react";
 
 export default function Cart() {
@@ -17,6 +18,7 @@ export default function Cart() {
     // handlePurchase
   } = useCart();
   const [totalAmount, setTotalAmount] = useState(getTotalCost());
+  const router = useRouter()
 
   useEffect(() => {
     setTotalAmount(getTotalCost());
@@ -30,6 +32,12 @@ export default function Cart() {
       },
       body: JSON.stringify(products.map(p => p.id))
     })
+
+    if(res.status === 201){ // created
+      const body = await res.json()
+      console.log(body)
+      router.push(body.redirectUrl)
+    }
   }
   
 

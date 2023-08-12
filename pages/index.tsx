@@ -1,8 +1,9 @@
 import { GetStaticProps, InferGetServerSidePropsType } from "next";
 import Product from "@/components/Product";
 import prisma from "@/lib/prisma";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Button from "@/components/Button";
+import { addMissing } from "@/lib/utils/stripe";
 
 // const inter = Inter({ subsets: ["latin"] });
 type ProductType = {

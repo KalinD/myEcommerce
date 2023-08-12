@@ -5,6 +5,7 @@ import { authOptions } from "./auth/[...nextauth]";
 import { UserRole } from "@prisma/client";
 import multiparty from "multiparty";
 import fs from 'fs'
+import { addProduct } from "@/lib/utils/stripe";
 
 type ImageRequest = {
     fieldName: string,
@@ -68,6 +69,8 @@ export default async function handler(request: NextApiRequest, response: NextApi
             image: `${IMAGES_URL}/${data.files.image[0].originalFilename}`,
         },
     });
+
+    await addProduct(product.id)
 
     response.status(201).send(product)
 }
