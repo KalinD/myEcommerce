@@ -77,6 +77,6 @@ export default async function handler(request: NextApiRequest, response: NextApi
         else response.status(404).send({ message: 'Product was not found! Make sure you delete an existing product.' })
     }
     else {
-        response.status(405).send({ message: 'Method Not Allowed!' })
+        response.status(405).send(JSON.stringify({ message: 'Method Not Allowed!' }))
     }
 }

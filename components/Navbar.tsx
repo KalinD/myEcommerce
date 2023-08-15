@@ -1,6 +1,5 @@
-import { useAuth } from "@/context/AuthContext";
 import { useCart } from "@/context/CartContext";
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import NavLink from "./NavLink";
 import Image from "next/image";
 import { useMediaQuery } from "react-responsive";
@@ -15,6 +14,12 @@ const Navbar = () => {
     open && isMobile ? "translate-x-0" : "translate-x-full"
   }`;
   const desktopClasses = `left-0 flex-row justify-between px-5`;
+  const {tryToLoadFromCookies} = useCart()
+
+  
+  useEffect(() => {
+    tryToLoadFromCookies()
+  })
 
   return (
     <nav>
@@ -87,7 +92,7 @@ const Navbar = () => {
               <NavLink
                 onClick={() => {
                   setOpen(false);
-                  signOut();
+                  signOut({callbackUrl: '/'});
                 }}
               >
                 Logout

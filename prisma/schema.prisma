@@ -8,15 +8,15 @@ datasource db {
 }
 
 model Product {
-  id          String  @id @default(cuid())
+  id          String           @id @default(cuid())
   stripeId    String?
   name        String
   image       String
   altText     String
   description String
   price       Float
-  carts       Cart[]  @relation("CartToProduct")
-  orders      Order[] @relation("OrderToProduct")
+  carts       Cart[]           @relation("CartToProduct")
+  orders      OrderToProduct[]
 }
 
 model Cart {
@@ -27,10 +27,22 @@ model Cart {
 }
 
 model Order {
-  id       String    @id @default(cuid())
-  userId   String
-  user     User      @relation(fields: [userId], references: [id], onDelete: Cascade)
-  products Product[] @relation("OrderToProduct")
+  id            String           @id @default(cuid())
+  userId        String
+  stripeSession String           @unique
+  user          User             @relation(fields: [userId], references: [id], onDelete: Cascade)
+  products      OrderToProduct[]
+}
+
+model OrderToProduct {
+  order     Order   @relation(fields: [orderId], references: [id])
+  orderId   String
+  product   Product @relation(fields: [productId], references: [id])
+  productId String
+
+  amount    Int
+
+  @@id([orderId, productId])
 }
 
 model Account {
@@ -65,18 +77,19 @@ enum UserRole {
 }
 
 model User {
-  id            String    @id @default(cuid())
-  name          String?
-  email         String?   @unique
-  emailVerified DateTime?
-  image         String?
-  password      String?
-  username      String?   @unique
-  role          UserRole @default(USER)
-  accounts      Account[]
-  carts         Cart[]
-  orders        Order[]
-  sessions      Session[]
+  id              String    @id @default(cuid())
+  name            String?
+  purchaseSession String?
+  email           String?   @unique
+  emailVerified   DateTime?
+  image           String?
+  password        String?
+  username        String?   @unique
+  role            UserRole  @default(USER)
+  accounts        Account[]
+  carts           Cart[]
+  orders          Order[]
+  sessions        Session[]
 }
 
 model VerificationToken {

@@ -10,6 +10,7 @@ declare module 'next-auth'{
             role: UserRole
             username: string;
             accessToken: string;
+            purchaseSession: string;
         }
     }
 }

@@ -1,8 +1,6 @@
 import { Product } from "@prisma/client";
 import React, {
   Dispatch,
-  LegacyRef,
-  MutableRefObject,
   SetStateAction,
   useRef,
   useState,

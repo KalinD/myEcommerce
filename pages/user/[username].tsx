@@ -21,8 +21,16 @@ type Product = {
   price: number;
 };
 
+type ProductToOrder = {
+  orderId: string;
+  productId: string;
+  product: Product;
+  amount: number;
+}
+
 type Order = {
-  products: Product[];
+  id: string;
+  products: ProductToOrder[];
 };
 
 type User = {
@@ -37,12 +45,23 @@ type User = {
   orders: Order[];
 };
 
-const User = ({ user }: { user: User }) => {
+const User = ({ user, order }: { user: User, order: Order }) => {
   return (
     <div className="mt-20">
       <div className="border border-accent w-fit h-fit">{user?.name}</div>
       <div className="border border-accent w-fit h-fit">{user?.username}</div>
       <div className="border border-accent w-fit h-fit">{user?.email}</div>
+      <div>
+        {user.orders.map((order, index) => 
+          <div key={`order-${order.id}-${order.products.length}`} className="border border-accent">
+            {order.products.map((p, pIndex) => 
+              <div key={`product-${index}-${p.productId}`} className="border border-primary">
+                {p.product.name} - {p.amount}
+              </div>
+            )}
+          </div>
+        )}
+      </div>
     </div>
   );
 };
@@ -70,8 +89,18 @@ export const getStaticProps = async ({
       email: true,
       name: true,
       image: true,
+      orders: {
+        include: {
+          products: {
+            include:{
+              product: true
+            }
+          }
+        }
+      }
     },
   });
+  console.log(user)
 
   return {
     props: { user },

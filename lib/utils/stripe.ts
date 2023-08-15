@@ -1,22 +1,12 @@
 import Product from "@/components/Product";
-// import { loadStripe } from "@stripe/stripe-js";
-// import {useStripe, useElements, PaymentElement} from '@stripe/react-stripe-js';
-// import Stripe from "stripe";
 import prisma from "../prisma";
 import Stripe from 'stripe';
-import { strictEqual } from "assert";
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY as string, {
     apiVersion: "2022-11-15",
 });
 
 export default stripe
-
-// export const getStripe = async () => {
-//     // return new Stripe(process.env.STRIPE_SECRET_KEY as string);
-//     // return await loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY as string)
-//     return new stripe(process.env.STRIPE_SECRET_KEY)
-// }
 
 export const addMissing = async () => {
     console.log('Populating...')
@@ -35,7 +25,6 @@ export const addMissing = async () => {
 }
 
 export const addProduct = async (productId: string) => {
-    // const stripe = await getStripe()
     const product = await prisma.product.findUnique({
         where: {
             id: productId

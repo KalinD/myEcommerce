@@ -1,9 +1,6 @@
 import Button from "@/components/Button";
 import { useCart } from "@/context/CartContext";
-import prisma from "@/lib/prisma";
-import { useSession } from "next-auth/react";
 import Image from "next/image";
-import { useRouter } from "next/router";
 import React, { useState, useEffect, MouseEventHandler } from "react";
 
 export default function Cart() {
@@ -15,31 +12,14 @@ export default function Cart() {
     addProduct,
     count,
     getTotalCost,
-    // handlePurchase
+    handlePurchase,
   } = useCart();
   const [totalAmount, setTotalAmount] = useState(getTotalCost());
-  const router = useRouter()
+
 
   useEffect(() => {
     setTotalAmount(getTotalCost());
   }, [count]);
-
-  const handlePurchase = async () => {
-    const res = await fetch('/api/purchase', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(products.map(p => p.id))
-    })
-
-    if(res.status === 201){ // created
-      const body = await res.json()
-      console.log(body)
-      router.push(body.redirectUrl)
-    }
-  }
-  
 
   return (
     <div className="py-10 h-full">

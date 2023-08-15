@@ -57,10 +57,20 @@ export const authOptions: NextAuthOptions = {
   },
   callbacks: {
     async jwt({token, user}){
-      return {...token, ...user}
+      return {...token, ...user }
     },
     async session({session, token}){
       session.user = token as any
+      
+      const prismaUser = await prisma.user.findUnique({
+        where: {
+          id: session.user.id
+        },
+        select: {
+          purchaseSession: true,
+        }
+      })
+      session.user.purchaseSession = prismaUser?.purchaseSession as string
       return session
     }
   }
