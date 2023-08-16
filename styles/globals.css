@@ -3,27 +3,76 @@
 @tailwind utilities;
 
 
-:root {
-  --white-color: #ffffff;
-  --text-color: #000000;
-  --background-color: #fdfefb;
-  --primary-color: #241155;
-  --secondary-color: #e9c3f3;
-  --accent-color: #2749c4;
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 224 71.4% 4.1%;
+    --card: 0 0% 100%;
+    --card-foreground: 224 71.4% 4.1%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 224 71.4% 4.1%;
+    --primary: 262.1 83.3% 57.8%;
+    --primary-foreground: 210 20% 98%;
+    --secondary: 220 14.3% 95.9%;
+    --secondary-foreground: 220.9 39.3% 11%;
+    --muted: 220 14.3% 95.9%;
+    --muted-foreground: 220 8.9% 46.1%;
+    --accent: 220 14.3% 95.9%;
+    --accent-foreground: 220.9 39.3% 11%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 20% 98%;
+    --border: 220 13% 91%;
+    --input: 220 13% 91%;
+    --ring: 262.1 83.3% 57.8%;
+    --radius: 0.5rem;
+  }
+ 
+  .dark {
+    --background: 224 71.4% 4.1%;
+    --foreground: 210 20% 98%;
+    --card: 224 71.4% 4.1%;
+    --card-foreground: 210 20% 98%;
+    --popover: 224 71.4% 4.1%;
+    --popover-foreground: 210 20% 98%;
+    --primary: 263.4 70% 50.4%;
+    --primary-foreground: 210 20% 98%;
+    --secondary: 215 27.9% 16.9%;
+    --secondary-foreground: 210 20% 98%;
+    --muted: 215 27.9% 16.9%;
+    --muted-foreground: 217.9 10.6% 64.9%;
+    --accent: 215 27.9% 16.9%;
+    --accent-foreground: 210 20% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 20% 98%;
+    --border: 215 27.9% 16.9%;
+    --input: 215 27.9% 16.9%;
+    --ring: 263.4 70% 50.4%;
+  }
 }
 
+
+ 
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
 
 #__next {
   height: 100%;
 }
 
-body {
+/* body {
   background-image: linear-gradient(
     130deg in lch,
     hsl(288 67% 86%) 0%,
     hsl(80 60% 99%) 100%
   );
-}
+} */
 
 /* width */
 ::-webkit-scrollbar {
@@ -45,7 +94,6 @@ body {
 ::-webkit-scrollbar-thumb:hover {
   background: var(--accent-color);
 }
-
 
 @layer components {
   /* This won't be included in your compiled CSS unless you actually use it */
@@ -75,26 +123,26 @@ body {
   }
 
   .hover-underline-animation {
-  display: inline-block;
-  position: relative;
-  color: var(--primary-color);
-}
+    display: inline-block;
+    position: relative;
+    color: var(--primary-color);
+  }
 
-.hover-underline-animation::after {
-  content: '';
-  position: absolute;
-  width: 100%;
-  transform: scaleX(0);
-  height: 2px;
-  bottom: 0;
-  left: 0;
-  background-color: #2749c4;
-  transform-origin: bottom right;
-  transition: transform 0.25s ease-out;
-}
+  .hover-underline-animation::after {
+    content: "";
+    position: absolute;
+    width: 100%;
+    transform: scaleX(0);
+    height: 2px;
+    bottom: 0;
+    left: 0;
+    background-color: #2749c4;
+    transform-origin: bottom right;
+    transition: transform 0.25s ease-out;
+  }
 
-.hover-underline-animation:hover::after {
-  transform: scaleX(1);
-  transform-origin: bottom left;
-}
+  .hover-underline-animation:hover::after {
+    transform: scaleX(1);
+    transform-origin: bottom left;
+  }
 }

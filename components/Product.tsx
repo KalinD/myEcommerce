@@ -1,8 +1,10 @@
 import React, { useState, MouseEvent } from "react";
 import Image from "next/image";
 import { useCart } from "@/context/CartContext";
-import Button from "./Button";
+// import Button from "./Button";
+import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import { Card } from "./ui/card";
 
 type Product = {
   id: string;
@@ -36,7 +38,7 @@ const Product = ({ id, name, image, description, altText, price }: Product) => {
       `perspective(${e.currentTarget.clientWidth}px) rotateX(0deg) rotateY(0deg)`
     );
   }
-
+  
   return (
     <div
       className="hover:translate-z product p-4"

@@ -1,9 +1,7 @@
-import Button from "@/components/Button";
 import { useCart } from "@/context/CartContext";
-import prisma from "@/lib/prisma";
-import { useSession } from "next-auth/react";
 import Image from "next/image";
 import React, { useState, useEffect, MouseEventHandler } from "react";
+import { Button } from "@/components/ui/button";
 
 export default function Cart() {
   const {
