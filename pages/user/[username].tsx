@@ -1,13 +1,5 @@
-import { useAuth } from "@/context/AuthContext";
-import React, { useEffect, useState } from "react";
-import { getSession, useSession } from "next-auth/react";
+import React from "react";
 import prisma from "@/lib/prisma";
-import {
-  GetServerSideProps,
-  GetStaticProps,
-  InferGetServerSidePropsType,
-} from "next";
-
 type Cart = {
   products: Product[];
 };
@@ -26,10 +18,11 @@ type ProductToOrder = {
   productId: string;
   product: Product;
   amount: number;
-}
+};
 
 type Order = {
   id: string;
+  orderedOn: Date;
   products: ProductToOrder[];
 };
 
@@ -45,28 +38,28 @@ type User = {
   orders: Order[];
 };
 
-const User = ({ user, order }: { user: User, order: Order }) => {
+const UserPage = ({ user, order }: { user: User; order: Order }) => {
   return (
     <div className="mt-20">
-      <div className="border border-accent w-fit h-fit">{user?.name}</div>
-      <div className="border border-accent w-fit h-fit">{user?.username}</div>
-      <div className="border border-accent w-fit h-fit">{user?.email}</div>
-      <div>
-        {user.orders.map((order, index) => 
-          <div key={`order-${order.id}-${order.products.length}`} className="border border-accent">
-            {order.products.map((p, pIndex) => 
-              <div key={`product-${index}-${p.productId}`} className="border border-primary">
-                {p.product.name} - {p.amount}
-              </div>
-            )}
-          </div>
-        )}
-      </div>
+      <ul>
+        {user && user.orders.map((order, index) => (
+          <li className=" list-item">
+            {order.orderedOn.toDateString()}
+            <ul key={`order-${order.id}-${order.products.length}`}>
+              {order.products.map((p, pIndex) => (
+                <li key={`product-${order.id}-${p.productId}`} className=" list-item">
+                  {p.product.name} - {p.amount}
+                </li>
+              ))}
+            </ul>
+          </li>
+        ))}
+      </ul>
     </div>
   );
 };
 
-export default User;
+export default UserPage;
 
 export const getStaticProps = async ({
   params: { username },
@@ -92,15 +85,14 @@ export const getStaticProps = async ({
       orders: {
         include: {
           products: {
-            include:{
-              product: true
-            }
-          }
-        }
-      }
+            include: {
+              product: true,
+            },
+          },
+        },
+      },
     },
   });
-  console.log(user)
 
   return {
     props: { user },
