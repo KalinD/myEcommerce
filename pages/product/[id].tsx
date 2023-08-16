@@ -7,7 +7,7 @@ import type {
 import { ParsedUrlQuery } from "querystring";
 import prisma from "@/lib/prisma";
 import Image from "next/image";
-import Button from "@/components/Button";
+import { Button } from "@/components/ui/button";
 import { useCart } from "@/context/CartContext";
 
 type Product = {
