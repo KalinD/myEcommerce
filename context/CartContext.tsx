@@ -134,7 +134,7 @@ export const CartProvider = ({ children }: { children: ReactElement }) => {
 
   const clearCart = () => {
     setProducts([]);
-    setCookie("products", products);
+    setCookie("products", []);
     setCount(0);
   };
 

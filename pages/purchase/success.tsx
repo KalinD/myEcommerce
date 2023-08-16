@@ -5,7 +5,6 @@ const Success = () => {
   const { confirmPurchase, clearCart } = useCart();
 
   useEffect(() => {
-    console.log('Success page')
     try {
       confirmPurchase();
       clearCart();

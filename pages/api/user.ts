@@ -29,5 +29,5 @@ export default async function handler(request: NextApiRequest, response: NextApi
     });
 
     const { password, ...result } = user;
-    response.send(result)
+    response.status(201).send(result)
 }
