@@ -1,10 +1,10 @@
 import React from "react";
-import SubmitButton from "@/components/SubmitButton";
 import { signIn } from "next-auth/react";
 import { AiFillGithub } from "react-icons/ai";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm, SubmitHandler } from "react-hook-form";
+import { useForm } from "react-hook-form";
+import { Button } from "@/components/ui/button";
 
 type Inputs = {
   emailOrUsername: string;
@@ -50,7 +50,7 @@ export default function Login() {
           placeholder="Enter Password"
           className='rounded p-1'
         />
-        <SubmitButton value="Login" />
+        <Button type="submit">Login</Button>
       </form>
       <AiFillGithub
         onClick={() => {

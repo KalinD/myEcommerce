@@ -7,7 +7,7 @@ import multiparty from "multiparty";
 import fs from 'fs'
 
 import { RequestBody } from "../product";
-import { deleteProduct, updateProduct } from "@/lib/utils/stripe";
+import { deactivateProduct, updateProduct } from "@/lib/utils/stripe";
 
 export const config = {
     api: {
@@ -36,7 +36,8 @@ export default async function handler(request: NextApiRequest, response: NextApi
                 id: id as string
             }
         })
-        if (deletedProducts && await deleteProduct(id as string)) {
+        const isActive = await deactivateProduct(id as string)
+        if (deletedProducts && !isActive) {
             fs.unlinkSync(`${UPLOAD_URL}/${deletedProducts.image.split('/')[2]}`)
             response.status(204).send(null)
         }
@@ -72,7 +73,9 @@ export default async function handler(request: NextApiRequest, response: NextApi
                 price: Number(data.fields.price[0]),
             }
         })
-        await updateProduct(updatedProduct)
+
+        // Can't update through Stripe API
+        // await updateProduct(updatedProduct)
         if (updatedProduct) response.status(200).send(updatedProduct)
         else response.status(404).send({ message: 'Product was not found! Make sure you delete an existing product.' })
     }

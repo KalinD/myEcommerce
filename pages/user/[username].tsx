@@ -43,7 +43,7 @@ const UserPage = ({ user, order }: { user: User; order: Order }) => {
     <div className="mt-20">
       <ul>
         {user && user.orders.map((order, index) => (
-          <li className=" list-item">
+          <li className=" list-item" key={`order-${index}`}>
             {order.orderedOn.toDateString()}
             <ul key={`order-${order.id}-${order.products.length}`}>
               {order.products.map((p, pIndex) => (

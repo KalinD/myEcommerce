@@ -4,7 +4,8 @@ import { useCart } from "@/context/CartContext";
 // import Button from "./Button";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
-import { Card } from "./ui/card";
+import { Card, CardContent, CardFooter, CardHeader } from "./ui/card";
+import { useRouter } from "next/router";
 
 type Product = {
   id: string;
@@ -19,6 +20,7 @@ const Product = ({ id, name, image, description, altText, price }: Product) => {
   const { addProduct } = useCart();
   const [transform, setTransform] = useState("");
   const THRESHOLD = 3;
+  const router = useRouter();
 
   function handleHover(e: MouseEvent<HTMLDivElement>) {
     const { clientX, clientY, currentTarget } = e;
@@ -38,42 +40,39 @@ const Product = ({ id, name, image, description, altText, price }: Product) => {
       `perspective(${e.currentTarget.clientWidth}px) rotateX(0deg) rotateY(0deg)`
     );
   }
-  
+
   return (
-    <div
-      className="hover:translate-z product p-4"
+    <Card
+      className="hover:translate-z product cursor-pointer flex flex-col justify-between text-center"
       onMouseMove={handleHover}
       onMouseLeave={resetStyles}
       style={{ transform: transform }}
+      onClick={() => router.push(`product/${id}`)}
     >
-      <div className="content h-full flex justify-between flex-col">
-        <Link href={`product/${id}`}>
-          <div>
-            <div className="text-center font-bold text-lg md:text-xl">
-              <h1>{name.substring(0, 30) + (name.length > 30 ? "..." : "")}</h1>
-            </div>
-            <div className="flex justify-center">
-              <div className="relative h-60 w-60">
-                <Image
-                  src={image}
-                  alt={altText}
-                  fill
-                  unoptimized={true}
-                  className="object-contain"
-                />
-              </div>
-            </div>
-            <div>
-              <p>
-                {description.substring(0, 100) +
-                  (description.length > 100 ? "..." : "")}
-              </p>
-            </div>
-          </div>
-        </Link>
-        <div className="flex flex-row justify-around">
-          <div className="flex flex-col text-accent justify-center">
-            <div>{price.toFixed(2)}€</div>
+      <CardHeader>
+        <h1>{name.substring(0, 30) + (name.length > 30 ? "..." : "")}</h1>
+      </CardHeader>
+      <CardContent>
+        <div className="relative h-60 w-full">
+          <Image
+            src={image}
+            alt={altText}
+            fill
+            unoptimized={true}
+            className="object-contain"
+          />
+        </div>
+        <div>
+          <p>
+            {description.substring(0, 100) +
+              (description.length > 100 ? "..." : "")}
+          </p>
+        </div>
+      </CardContent>
+      <CardFooter>
+        <div className="flex flex-row justify-evenly w-full">
+          <div className="flex flex-col justify-center">
+            <div>{(price / 100).toFixed(2)}€</div>
           </div>
           <div>
             <Button
@@ -93,8 +92,8 @@ const Product = ({ id, name, image, description, altText, price }: Product) => {
             </Button>
           </div>
         </div>
-      </div>
-    </div>
+      </CardFooter>
+    </Card>
   );
 };
 

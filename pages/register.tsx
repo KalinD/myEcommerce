@@ -1,11 +1,9 @@
-import { useAuth } from "@/context/AuthContext";
-import React, { FormEvent, useState } from "react";
-import SubmitButton from "@/components/SubmitButton";
+import React from "react";
 import { signIn } from "next-auth/react";
 import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm, SubmitHandler } from "react-hook-form";
-import prisma from "@/lib/prisma";
+import { useForm } from "react-hook-form";
+import { Button } from "@/components/ui/button";
 
 interface RegisterFields {
   username: string;
@@ -97,7 +95,7 @@ const registerSchema = z
           placeholder="Confirm Password"
           {...register("password2")}
         />
-        <SubmitButton value="Register" />
+        <Button type="submit">Register</Button>
       </form>
     </div>
   );

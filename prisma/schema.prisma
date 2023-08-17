@@ -14,7 +14,7 @@ model Product {
   image       String
   altText     String
   description String
-  price       Float
+  price       Int
   carts       Cart[]           @relation("CartToProduct")
   orders      OrderToProduct[]
 }

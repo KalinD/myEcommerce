@@ -37,7 +37,7 @@ export const addProduct = async (productId: string) => {
             description: product.description,
             default_price_data: {
                 currency: 'eur',
-                unit_amount_decimal: String(product.price * 100) // cents
+                unit_amount_decimal: product.price.toString() // cents
             }
         });
         await prisma.product.update({
@@ -53,15 +53,30 @@ export const addProduct = async (productId: string) => {
 }
 
 export const updateProduct = async (product: Product) => {
-    const stripeProduct = await stripe.products.update(product.id, {
-        name: product.name,
-        description: product.description,
-        default_price: String(product.price * 100) // cents
-    });
+
+    const stripeProduct = await stripe.products.retrieve(product.id)
+    const stripePrice = stripeProduct.default_price as string
+    const price = await stripe.prices.update(
+        stripePrice,
+        {
+            currency_options: {
+                'eur': {
+                    unit_amount: Number(product.price.toFixed(2)) * 100
+                }
+            }
+        }
+    );
+    // const stripeProduct = await stripe.products.retrieve(product.id, {
+    //     name: product.name,
+    //     description: product.description,
+    //     default_price: String(product.price * 100) // cents
+    // });
     return stripeProduct
 }
 
-export const deleteProduct = async (productId: string) => {
-    const res = await stripe.products.del(productId)
-    return res.deleted
+export const deactivateProduct = async (productId: string) => {
+    const res = await stripe.products.update(productId, {
+        active: false
+    })
+    return res.active
 }

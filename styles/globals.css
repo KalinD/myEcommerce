@@ -5,7 +5,7 @@
 
 
 @layer base {
-  :root {
+  .dark {
     --background: 0 0% 100%;
     --foreground: 224 71.4% 4.1%;
     --card: 0 0% 100%;
@@ -28,7 +28,7 @@
     --radius: 0.5rem;
   }
  
-  .dark {
+  :root {
     --background: 224 71.4% 4.1%;
     --foreground: 210 20% 98%;
     --card: 224 71.4% 4.1%;
@@ -48,6 +48,7 @@
     --border: 215 27.9% 16.9%;
     --input: 215 27.9% 16.9%;
     --ring: 263.4 70% 50.4%;
+    --radius: 0.5rem;
   }
 }
 
@@ -65,14 +66,6 @@
 #__next {
   height: 100%;
 }
-
-/* body {
-  background-image: linear-gradient(
-    130deg in lch,
-    hsl(288 67% 86%) 0%,
-    hsl(80 60% 99%) 100%
-  );
-} */
 
 /* width */
 ::-webkit-scrollbar {
