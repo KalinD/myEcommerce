@@ -20,6 +20,9 @@ export default async function handler(
       },
     })
   ) {
+    response
+      .status(404)
+      .send(JSON.stringify({ message: "Purchase was successful!" }));
     return;
   }
   const stripeSession = await stripe.checkout.sessions.retrieve(

@@ -66,7 +66,7 @@ const Navbar = () => {
             >
               Cart{" "}
               {count > 0 ? (
-                <span className="absolute right-0 rounded-full h-fit bg-accent text-white px-2 text-center">
+                <span className="absolute right-0 rounded-full h-fit w-fit bg-primary text-white px-2 text-center">
                   {count}
                 </span>
               ) : (

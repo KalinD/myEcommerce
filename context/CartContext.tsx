@@ -8,7 +8,7 @@ import {
 } from "react";
 import { useCookies } from "react-cookie";
 
-type Product = {
+export type Product = {
   id: string;
   name: string;
   image: string;

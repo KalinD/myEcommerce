@@ -22,14 +22,11 @@ export default function Home({
 }: InferGetServerSidePropsType<typeof getStaticProps>) {
   const [page, setPage] = useState<number>(0);
 
-  const buttonClasses = "p-0 md:p-0 lg:px-2 lg:py-0.5 bg-accent";
-
   return (
     <main className="flex flex-col-reverse justify-between md:justify-start md:flex-col items-center p-12 md:px-24 h-screen ">
       <div className="flex flex-row w-full justify-end m-2">
         <div>
           <Button
-            className={buttonClasses}
             disabled={page === 0}
             onClick={() => setPage((prevPage) => prevPage - 1)}
           >
@@ -39,7 +36,6 @@ export default function Home({
         <div className="text-lg bold px-2 flex flex-col justify-center"><div className="h-fit">{page + 1}</div></div>
         <div>
           <Button
-            className={buttonClasses}
             disabled={
               page + 1 === Math.ceil(products.length / PRODUCTS_PER_PAGE)
             }
