@@ -4,6 +4,8 @@ import { z } from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { AiFillGithub } from "react-icons/ai";
 
 interface RegisterFields {
   username: string;
@@ -78,25 +80,32 @@ const registerSchema = z
         })}
         className="flex flex-col gap-3"
       >
-        <input type="text" placeholder="Enter Name" {...register("name")} />
-        <input
+        <Input type="text" placeholder="Enter Name" {...register("name")} />
+        <Input
           type="text"
           placeholder="Enter Username"
           {...register("username")}
         />
-        <input type="email" placeholder="Enter Email" {...register("email")} />
-        <input
+        <Input type="email" placeholder="Enter Email" {...register("email")} />
+        <Input
           type="password"
           placeholder="Enter Password"
           {...register("password")}
         />
-        <input
+        <Input
           type="password"
           placeholder="Confirm Password"
           {...register("password2")}
         />
         <Button type="submit">Register</Button>
       </form>
+      <Button type="button" className="w-full mt-3">
+        <AiFillGithub
+          onClick={() => {
+            signIn("github", { callbackUrl: "/" });
+          }}
+        />
+      </Button>
     </div>
   );
 }

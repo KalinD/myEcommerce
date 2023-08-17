@@ -18,41 +18,20 @@ type Product = {
 
 const Product = ({ id, name, image, description, altText, price }: Product) => {
   const { addProduct } = useCart();
-  const [transform, setTransform] = useState("");
-  const THRESHOLD = 3;
   const router = useRouter();
 
-  function handleHover(e: MouseEvent<HTMLDivElement>) {
-    const { clientX, clientY, currentTarget } = e;
-    const { clientWidth, clientHeight, offsetLeft, offsetTop } = currentTarget;
-
-    const horizontal = (clientX - offsetLeft) / clientWidth;
-    const vertical = (clientY - offsetTop) / clientHeight;
-    const rotateX = (THRESHOLD / 2 - horizontal * THRESHOLD).toFixed(2);
-    const rotateY = (vertical * THRESHOLD - THRESHOLD / 2).toFixed(2);
-    setTransform(
-      `perspective(${clientWidth}px) rotateX(${rotateY}deg) rotateY(${rotateX}deg) scale3d(1, 1, 1)`
-    );
-  }
-
-  function resetStyles(e: MouseEvent<HTMLDivElement>) {
-    setTransform(
-      `perspective(${e.currentTarget.clientWidth}px) rotateX(0deg) rotateY(0deg)`
-    );
-  }
-
   return (
-    <Card
-      className="hover:translate-z product cursor-pointer flex flex-col justify-between text-center"
-      onMouseMove={handleHover}
-      onMouseLeave={resetStyles}
-      style={{ transform: transform }}
-      onClick={() => router.push(`product/${id}`)}
-    >
-      <CardHeader>
+    <Card className=" flex flex-col justify-between text-center">
+      <CardHeader
+        className="cursor-pointer"
+        onClick={() => router.push(`/product/${id}`)}
+      >
         <h1>{name.substring(0, 30) + (name.length > 30 ? "..." : "")}</h1>
       </CardHeader>
-      <CardContent>
+      <CardContent
+        className="cursor-pointer"
+        onClick={() => router.push(`/product/${id}`)}
+      >
         <div className="relative h-60 w-full">
           <Image
             src={image}

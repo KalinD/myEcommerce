@@ -46,12 +46,12 @@ const ProductPage = ({
   if (!product) return <div>Error</div>
 
   return (
-    <div className="pt-10 flex flex-col gap-2 md:gap-4 h-full">
+    <div className="pt-10 px-4 flex flex-col gap-2 md:gap-4 h-full">
       <div className="font-bold text-lg md:text-xl">
         <h1>{product.name}</h1>
       </div>
       <div className="flex flex-col md:flex-row">
-        <div className="relative w-fit h-fit px-10 md:px-0">
+        <div className="relative w-1/2 h-1/2 px-10 md:px-0">
           <Image
             src={product.image}
             alt={product.altText}
@@ -63,7 +63,7 @@ const ProductPage = ({
         <div className="flex flex-col gap-4 px-2 pt-2 md:px-5 md:pt-5 lg:px-10 lg:pt-10 justify-betwen">
           <div className="bg-white bg-opacity-70 p-2 md:p-4 rounded-lg">{product.description}</div>
           <div className="flex flex-row justify-end gap-4">
-            <div className="flex flex-col justify-center text-accent">{product.price.toFixed(2)}€</div>
+            <div className="flex flex-col justify-center">{(product.price / 100).toFixed(2)}€</div>
             <div>
               <Button onClick={() => addProduct({ ...product, amount: 1 })}>
                 Add to cart

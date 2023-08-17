@@ -2,6 +2,7 @@ import { useCart } from "@/context/CartContext";
 import Image from "next/image";
 import React, { useState, useEffect, MouseEventHandler } from "react";
 import { Button } from "@/components/ui/button";
+import CartTable from "@/components/CartTable";
 
 export default function Cart() {
   const {
@@ -29,7 +30,7 @@ export default function Cart() {
         </div>
       </div>
       {count > 0 ? (
-        <div className="flex flex-col">
+        <><CartTable /><div className="flex flex-col">
           <div>
             <table className="w-full border-collapse text-center">
               <thead className="w-full table-fixed table">
@@ -54,8 +55,7 @@ export default function Cart() {
                             src={product.image}
                             fill
                             alt={product.altText}
-                            unoptimized={true}
-                          />
+                            unoptimized={true} />
                         </div>
                       </td>
                       <td className="border-t border-accent">
@@ -94,7 +94,7 @@ export default function Cart() {
               <Button onClick={handlePurchase}>Purchase</Button>
             </div>
           </div>
-        </div>
+        </div></>
       ) : (
         <div className="w-full h-full flex justify-center items-center pt-10 md:pt-16 ld:pt-20">
           Your Cart is empty

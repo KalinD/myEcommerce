@@ -26,17 +26,17 @@ export default function Home({
 
   return (
     <main className="flex flex-col-reverse justify-between md:justify-start md:flex-col items-center p-12 md:px-24 h-screen ">
-      <div className="flex flex-row w-full justify-end">
+      <div className="flex flex-row w-full justify-end m-2">
         <div>
           <Button
             className={buttonClasses}
             disabled={page === 0}
             onClick={() => setPage((prevPage) => prevPage - 1)}
           >
-            {"<"}
+            Prev
           </Button>
         </div>
-        <div className="text-lg bold px-2">{page + 1}</div>
+        <div className="text-lg bold px-2 flex flex-col justify-center"><div className="h-fit">{page + 1}</div></div>
         <div>
           <Button
             className={buttonClasses}
@@ -45,7 +45,7 @@ export default function Home({
             }
             onClick={() => setPage((prevPage) => prevPage + 1)}
           >
-            {">"}
+            Next
           </Button>
         </div>
       </div>
