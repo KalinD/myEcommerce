@@ -29,7 +29,7 @@ const CartTable = ({ products }: { products: Product[] }) => {
       </TableHeader>
       <TableBody className="block h-full pb-10 overflow-auto w-full table-fixed">
         {products.map((product) => (
-          <TableRow className="table-fixed border-t border-accent table h-48 w-full">
+          <TableRow key={`product-${product.id}`} className="table-fixed border-t border-accent table h-48 w-full">
             <TableCell>
               <div className="flex flex-col justify-center">
                 <Image

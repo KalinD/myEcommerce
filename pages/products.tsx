@@ -17,6 +17,12 @@ const Products = ({ ps }: ProductProps) => {
   const [isOpen, setIsOpen] = useState(false);
   const [editProduct, setEditProduct] = useState<Product>()
   const [products, setProducts] = useState<Product[]>(ps);
+  
+  useEffect(() => {
+    if(!isOpen){
+      setEditProduct(undefined)
+    }
+  }, [isOpen])
 
   if (status === "loading") {
     return <div className="p-20">Loading...</div>;
@@ -25,12 +31,6 @@ const Products = ({ ps }: ProductProps) => {
   if (session?.user.role !== "ADMIN") {
     throw new Error("You do not have permission to access this page!");
   }
-
-  useEffect(() => {
-    if(!isOpen){
-      setEditProduct(undefined)
-    }
-  }, [isOpen])
 
   return (
     <div className="h-screen overflow-y-hidden pt-12 px-10 pb-24 bg-no-repeat">
