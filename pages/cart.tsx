@@ -1,5 +1,4 @@
 import { useCart } from "@/context/CartContext";
-import Image from "next/image";
 import React, { useState, useEffect, MouseEventHandler } from "react";
 import { Button } from "@/components/ui/button";
 import CartTable from "@/components/CartTable";

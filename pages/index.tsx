@@ -37,7 +37,7 @@ export default function Home({
         <div>
           <Button
             disabled={
-              page + 1 === Math.ceil(products.length / PRODUCTS_PER_PAGE)
+              page + 1 >= Math.ceil(products.length / PRODUCTS_PER_PAGE)
             }
             onClick={() => setPage((prevPage) => prevPage + 1)}
           >

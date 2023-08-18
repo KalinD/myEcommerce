@@ -60,7 +60,7 @@ const UserPage = ({ user, order }: { user: User; order: Order }) => {
 
 export default UserPage;
 
-export const getStaticProps = async ({
+export const getServerSideProps = async ({
   params: { username },
 }: {
   params: { username: string };
@@ -98,20 +98,20 @@ export const getStaticProps = async ({
   };
 };
 
-export async function getStaticPaths() {
-  const users = await prisma.user.findMany({
-    select: {
-      username: true,
-      name: true,
-      email: true,
-    },
-  });
-  const paths = users.map((user) => ({
-    params: { username: user.username || user.name || user.email },
-  }));
+// export async function getStaticPaths() {
+//   const users = await prisma.user.findMany({
+//     select: {
+//       username: true,
+//       name: true,
+//       email: true,
+//     },
+//   });
+//   const paths = users.map((user) => ({
+//     params: { username: user.username || user.name || user.email },
+//   }));
 
-  return {
-    paths,
-    fallback: false,
-  };
-}
+//   return {
+//     paths,
+//     fallback: false,
+//   };
+// }
