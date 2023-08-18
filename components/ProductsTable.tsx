@@ -27,7 +27,7 @@ const ProductsTable = ({ products, setProducts, setEditProduct, setIsOpen }: Pro
   //   const router = useRouter();
 
     const handleDelete = async (productId: string) => {
-      const res = await fetch(`http://127.0.0.1:3000/api/product/${productId}`, {
+      const res = await fetch(`/api/product/${productId}`, {
         method: "DELETE",
       });
       if (res.status === 204) {

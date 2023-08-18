@@ -48,7 +48,7 @@ export const TableProduct = ({ p, setProducts }: TableProductProps) => {
     formData.append("price", String(product.price));
     formData.append("altText", product.altText);
     formData.append("image", image as Blob);
-    const res = await fetch(`http://127.0.0.1:3000/api/product/${product.id}`, {
+    const res = await fetch(`/api/product/${product.id}`, {
       method: "PUT",
       body: formData,
     });
@@ -56,7 +56,7 @@ export const TableProduct = ({ p, setProducts }: TableProductProps) => {
   };
 
   const handleDelete = async () => {
-    const res = await fetch(`http://127.0.0.1:3000/api/product/${product.id}`, {
+    const res = await fetch(`/api/product/${product.id}`, {
       method: "DELETE",
     });
     if (res.status === 204) router.reload();
