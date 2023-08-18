@@ -51,12 +51,14 @@ export default function Login() {
         />
         <Button type="submit">Login</Button>
       </form>
-      <Button type="button" className="w-full mt-3">
-        <AiFillGithub
-          onClick={() => {
-            signIn("github", { callbackUrl: "/" });
-          }}
-        />
+      <Button
+        type="button"
+        className="w-full mt-3"
+        onClick={() => {
+          signIn("github", { callbackUrl: "/" });
+        }}
+      >
+        <AiFillGithub />
       </Button>
     </div>
   );

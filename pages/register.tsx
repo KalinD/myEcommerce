@@ -15,33 +15,37 @@ interface RegisterFields {
   name: string;
 }
 
-
 export default function Register() {
-  
-const registerSchema = z
-.object({
-  username: z.string(),
-  email: z.string(),
-  password: z
-    .string()
-    .min(6, { message: "Password must be at least 6 characters long!" }),
-  password2: z.string(),
-  name: z.string().min(3, { message: "Name must be at least 3 characters" }),
-})
-.refine((data) => data.password === data.password2, {
-  message: "Passwords must match!",
-  path: ["confirmPassword"],
-})
-// .refine(async (data) => {
-//   const users = await prisma.user.findMany({
-//     select: {
-//       username: true
-//     }
-//   })
-//   return users.map(u => u.username).includes(data.username)
-// }, {message: 'Username is already taken', path: ['uniqueUsername']});
+  const registerSchema = z
+    .object({
+      username: z.string(),
+      email: z.string(),
+      password: z
+        .string()
+        .min(6, { message: "Password must be at least 6 characters long!" }),
+      password2: z.string(),
+      name: z
+        .string()
+        .min(3, { message: "Name must be at least 3 characters" }),
+    })
+    .refine((data) => data.password === data.password2, {
+      message: "Passwords must match!",
+      path: ["confirmPassword"],
+    });
+  // .refine(async (data) => {
+  //   const users = await prisma.user.findMany({
+  //     select: {
+  //       username: true
+  //     }
+  //   })
+  //   return users.map(u => u.username).includes(data.username)
+  // }, {message: 'Username is already taken', path: ['uniqueUsername']});
 
-  const { register, handleSubmit, formState: {errors} } = useForm<RegisterFields>({
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<RegisterFields>({
     defaultValues: {
       username: "",
       password: "",
@@ -99,12 +103,14 @@ const registerSchema = z
         />
         <Button type="submit">Register</Button>
       </form>
-      <Button type="button" className="w-full mt-3">
-        <AiFillGithub
-          onClick={() => {
-            signIn("github", { callbackUrl: "/" });
-          }}
-        />
+      <Button
+        type="button"
+        className="w-full mt-3"
+        onClick={() => {
+          signIn("github", { callbackUrl: "/" });
+        }}
+      >
+        <AiFillGithub />
       </Button>
     </div>
   );

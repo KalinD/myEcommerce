@@ -33,7 +33,7 @@ const Products = ({ ps }: ProductProps) => {
   }, [isOpen])
 
   return (
-    <div className="h-screen overflow-y-hidden pt-12 pb-24 bg-no-repeat">
+    <div className="h-screen overflow-y-hidden pt-12 px-10 pb-24 bg-no-repeat">
       {isOpen && (
         <Modal onClose={() => setIsOpen(false)}>
           <ProductForm setIsOpen={setIsOpen} product={editProduct} setProducts={setProducts} />
