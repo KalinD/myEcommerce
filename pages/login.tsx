@@ -33,7 +33,7 @@ export default function Login() {
           const res = await signIn("credentials", {
             emailOrUsername: data.emailOrUsername,
             password: data.password,
-            callbackUrl: `${process.env.NEXTAUTH_URL}/`,
+            callbackUrl: "/",
             redirect: true,
           });
         })}

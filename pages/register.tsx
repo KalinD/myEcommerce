@@ -77,7 +77,7 @@ export default function Register() {
             await signIn("credentials", {
               emailOrUsername: data.username,
               password: data.password,
-              callbackUrl: `${process.env.NEXTAUTH_URL}/`,
+              callbackUrl: "/",
               redirect: true,
             });
           }
@@ -107,7 +107,7 @@ export default function Register() {
         type="button"
         className="w-full mt-3"
         onClick={() => {
-          signIn("github", { callbackUrl: `${process.env.NEXTAUTH_URL}/` });
+          signIn("github", { callbackUrl: "/" });
         }}
       >
         <AiFillGithub />
