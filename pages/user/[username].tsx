@@ -40,7 +40,7 @@ type User = {
 
 const UserPage = ({ user, order }: { user: User; order: Order }) => {
   return (
-    <div className="mt-20">
+    <div className="mt-20 px-10">
       <ul>
         {user && user.orders.map((order, index) => (
           <li className=" list-item" key={`order-${index}`}>
