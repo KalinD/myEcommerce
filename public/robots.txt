@@ -1,0 +1,19 @@
+User-agent: *
+Disallow: /user/*
+
+User-agent: *
+Disallow: /login
+
+User-agent: *
+Disallow: /api/*
+
+User-agent: *
+Disallow: /register
+
+User-agent: *
+Disallow: /products
+
+User-agent: *
+Allow: /*
+
+Sitemap: https://kalind-ecommerce.com/sitemap.xml
