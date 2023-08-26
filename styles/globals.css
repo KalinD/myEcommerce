@@ -2,10 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
-
-
 @layer base {
-  :root {
+  .dark {
     --background: 0 0% 100%;
     --foreground: 224 71.4% 4.1%;
     --card: 0 0% 100%;
@@ -27,8 +25,8 @@
     --ring: 262.1 83.3% 57.8%;
     --radius: 0.5rem;
   }
- 
-  .dark {
+
+  :root {
     --background: 224 71.4% 4.1%;
     --foreground: 210 20% 98%;
     --card: 224 71.4% 4.1%;
@@ -51,8 +49,6 @@
   }
 }
 
-
- 
 @layer base {
   * {
     @apply border-border;
