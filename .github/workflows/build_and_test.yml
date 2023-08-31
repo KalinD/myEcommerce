@@ -9,7 +9,9 @@ jobs:
     runs-on: self-hosted
     steps:
       - run: npm ci
-      - run: npm run build
+             npm run build
+             pm2 stop npm
+             pm2 start npm -- start
   # test:
   #   runs-on: self-hosted
 
