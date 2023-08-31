@@ -37,4 +37,4 @@ npm run start
 myEcommerce is overall done for now. I might go back to it in the future for small improvements.
 
 # License
-MIT license @ (KalinD)[https://github.com/KalinD]
+MIT license @ [KalinD](https://github.com/KalinD)
