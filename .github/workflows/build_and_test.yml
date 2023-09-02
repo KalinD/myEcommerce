@@ -8,6 +8,8 @@ jobs:
   build:
     runs-on: self-hosted
     steps:
+      - name: Get latest commit
+        run: git pull
       - name: Clean Install
         run: npm ci
       - name: Build project
