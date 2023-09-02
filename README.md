@@ -4,7 +4,7 @@
 The website is hosted at: https://kalind-ecommerce.com/
 
 ## Description 
-I decided to do this project to improve my skills in web development. I used [Next.js](https://nextjs.org/) with [TypeScript](https://www.typescriptlang.org/), [tailwindcss](https://tailwindcss.com/) for styling, [shadcn/ui](https://ui.shadcn.com/) for better styled components, [Prisma](https://www.prisma.io/) as a database ORM, and [Stripe](https://stripe.com/) for payments. I chose this stack as I wanted to switch from JavaScript to TypeScript, and I wanted to improve my React.js/Next.js skills.
+I decided to do this project to improve my skills in web development. I used [Next.js](https://nextjs.org/) with [TypeScript](https://www.typescriptlang.org/), [tailwindcss](https://tailwindcss.com/) for styling, [shadcn/ui](https://ui.shadcn.com/) for better styled components, [PostgreSQL](https://www.postgresql.org/) for a database, [Prisma](https://www.prisma.io/) as a database ORM, and [Stripe](https://stripe.com/) for payments. I chose this stack as I wanted to switch from JavaScript to TypeScript, and I wanted to improve my React.js/Next.js skills.
 
 ![Image of the home page on Desktop](./github-images/desktop%20-%20home%20page.png)
 ![Image of the cart page on Desktop](./github-images/desktop%20-%20cart.png)
