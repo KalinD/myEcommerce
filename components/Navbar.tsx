@@ -76,6 +76,9 @@ const Navbar = () => {
           )}
         </div>
         <div className="flex flex-col md:flex-row gap-2">
+          <NavLink href="/about" onClick={() => setOpen(false)}>
+            About
+          </NavLink>
           {!session && (
             <>
               <NavLink href={"/login"} onClick={() => setOpen(false)}>
