@@ -27,7 +27,6 @@ export default function Login() {
   });
 
   return (
-    <div className="w-fit mx-auto bg-accent bg-opacity-75 p-8 mt-16 rounded text-black">
     <div className="w-fit mx-auto bg-accent bg-opacity-75 p-8 mt-16 rounded text-white">
       <form
         onSubmit={handleSubmit(async (data) => {
