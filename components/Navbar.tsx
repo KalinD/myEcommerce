@@ -4,22 +4,29 @@ import NavLink from "./NavLink";
 import Image from "next/image";
 import { useMediaQuery } from "react-responsive";
 import { signOut, useSession } from "next-auth/react";
+import ThemeProvider, { useTheme } from "next-themes";
 
 const Navbar = () => {
   const [open, setOpen] = useState(false);
   const isMobile = useMediaQuery({ query: `(max-width: 760px)` });
+  const { setTheme } = useTheme();
+  const [themeString, setThemeString] = useState<"Light" | "Dark">("Dark");
   const { count } = useCart();
   const { data: session } = useSession();
   const mobileClasses = `ease-in-out duration-300 bottom-0 px-5 py-12 flex-col justify-start ${
     open && isMobile ? "translate-x-0" : "translate-x-full"
   }`;
   const desktopClasses = `left-0 flex-row justify-between px-5`;
-  const {tryToLoadFromCookies} = useCart()
+  const { tryToLoadFromCookies } = useCart();
 
-  
   useEffect(() => {
-    tryToLoadFromCookies()
-  })
+    tryToLoadFromCookies();
+    setTheme("dark")
+  }, []);
+
+  useEffect(() => {
+    setTheme(themeString == "Dark" ? "light" : "dark");
+  }, [themeString]);
 
   return (
     <nav>
@@ -76,6 +83,14 @@ const Navbar = () => {
           )}
         </div>
         <div className="flex flex-col md:flex-row gap-2">
+          <div
+            className="hover-underline-animation p-2 text-lg md:text-xl cursor-pointer"
+            onClick={() =>
+              setThemeString((old) => (old == "Light" ? "Dark" : "Light"))
+            }
+          >
+            {themeString} Mode
+          </div>
           <NavLink href="/about" onClick={() => setOpen(false)}>
             About
           </NavLink>
@@ -95,7 +110,7 @@ const Navbar = () => {
               <NavLink
                 onClick={() => {
                   setOpen(false);
-                  signOut({callbackUrl: '/'});
+                  signOut({ callbackUrl: "/" });
                 }}
               >
                 Logout

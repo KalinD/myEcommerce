@@ -1,39 +1,41 @@
 import MyLink from "@/components/MyLink";
+import { useTheme } from "next-themes";
 import Head from "next/head";
 import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 
 const About = () => {
+  const {theme} = useTheme();
   const images = [
-    { src: "/next.svg", alt: "next.js logo", link: "https://nextjs.org/" },
+    { src: "/images/technologies/next", alt: "next.js logo", link: "https://nextjs.org/" },
     {
-      src: "/images/technologies/typescript.svg",
+      src: "/images/technologies/typescript",
       alt: "typescript logo",
       link: "https://www.typescriptlang.org/",
     },
     {
-      src: "/images/technologies/tailwindcss.svg",
+      src: "/images/technologies/tailwindcss",
       alt: "tailwindcss logo",
       link: "https://tailwindcss.com/",
     },
     {
-      src: "/images/technologies/shadcnui.svg",
+      src: "/images/technologies/shadcnui",
       alt: "shadcn/ui logo",
       link: "https://ui.shadcn.com/",
     },
     {
-      src: "/images/technologies/postgresql.svg",
+      src: "/images/technologies/postgresql",
       alt: "PostgreSQL logo",
       link: "https://www.postgresql.org/",
     },
     {
-      src: "/images/technologies/prisma.svg",
+      src: "/images/technologies/prisma",
       alt: "Prisma logo",
       link: "https://www.prisma.io/",
     },
     {
-      src: "/images/technologies/stripe.svg",
+      src: "/images/technologies/stripe",
       alt: "Stripe logo",
       link: "https://stripe.com/",
     },
@@ -94,7 +96,7 @@ const About = () => {
                   <Link href={image.link} className="flex justify-center">
                     <Image
                       className="max-h-20 md:max-w-fit"
-                      src={image.src}
+                      src={`${image.src}-${theme}.svg`}
                       alt={image.alt}
                       width={200}
                       height={200}
