@@ -50,9 +50,9 @@ const CartTable = ({ products }: { products: Product[] }) => {
               {((product.price * product.amount) / 100).toFixed(2)}€
             </TableCell>
             <TableCell>
-              <Button onClick={() => addProduct(product)}>+</Button>
+              <Button className="w-9 h-9" onClick={() => removeOneProduct(product)}>-</Button>
               {` ${product.amount} `}
-              <Button onClick={() => removeOneProduct(product)}>-</Button>
+              <Button className="w-9 h-9" onClick={() => addProduct(product)}>+</Button>
             </TableCell>
             <TableCell>
               <Button onClick={() => removeAllProduct(product)}>Remove</Button>
