@@ -6,6 +6,7 @@ import { useForm } from "react-hook-form";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { AiFillGithub } from "react-icons/ai";
+import Head from "next/head";
 
 interface RegisterFields {
   username: string;
@@ -57,9 +58,27 @@ export default function Register() {
   });
 
   return (
-    <div className="w-fit mx-auto bg-accent bg-opacity-75 p-8 mt-16 rounded text-black">
-    <div className="w-fit mx-auto bg-accent bg-opacity-75 p-8 mt-16 rounded text-white">
     <div className="w-fit mx-auto bg-accent bg-opacity-75 p-8 mt-16 rounded text-primary-color">
+      <Head>
+        <title>Register for an account</title>
+        <meta
+          name="description"
+          content="Register an account for the website. You can also register using your GitHub account."
+        />
+        <meta property="og:title" content="Register for an account" />
+        <meta
+          property="og:description"
+          content="Register an account for the website. You can also register using your GitHub account."
+        />
+        <meta property="og:image" content="https://kalind-ecommerce.com/" />
+        <meta
+          property="og:image:secure"
+          content="https://kalind-ecommerce.com/"
+        />
+        <meta property="og:url" content="https://kalind-ecommerce.com/login" />
+        <meta name="keywords" content="register, ecommrce, demo" />
+        <link rel="canonical" href="https://kalind-ecommerce.com/register" />
+      </Head>
       <form
         onSubmit={handleSubmit(async (data) => {
           const res = await fetch("/api/user", {

@@ -6,6 +6,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import Head from "next/head";
 
 type Inputs = {
   emailOrUsername: string;
@@ -27,9 +28,18 @@ export default function Login() {
   });
 
   return (
-    <div className="w-fit mx-auto bg-accent bg-opacity-75 p-8 mt-16 rounded text-black">
-    <div className="w-fit mx-auto bg-accent bg-opacity-75 p-8 mt-16 rounded text-white">
     <div className="w-fit mx-auto bg-accent bg-opacity-75 p-8 mt-16 rounded text-primary-color">
+      <Head>
+        <title>Login into your account</title>
+        <meta name="description" content="Login into your account using your email or username, and password. Or login using OAuth and your GitHub account." />
+        <meta property="og:title" content="Login into your account" />
+        <meta property="og:description" content="Login into your account using your email or username, and password. Or login using OAuth and your GitHub account." />
+        <meta property="og:image" content="https://kalind-ecommerce.com/" />
+        <meta property="og:image:secure" content="https://kalind-ecommerce.com/" />
+        <meta property="og:url" content="https://kalind-ecommerce.com/login" />
+        <meta name="keywords" content="login, ecommrce, demo" />
+        <link rel="canonical" href="https://kalind-ecommerce.com/login" />
+      </Head>
       <form
         onSubmit={handleSubmit(async (data) => {
           const res = await signIn("credentials", {

@@ -1,5 +1,7 @@
 import React from "react";
 import prisma from "@/lib/prisma";
+import Head from "next/head";
+
 type Cart = {
   products: Product[];
 };
@@ -38,21 +40,51 @@ type User = {
   orders: Order[];
 };
 
-const UserPage = ({ user, order }: { user: User; order: Order }) => {
+const UserPage = ({ user, username }: { user: User; username: string }) => {
   return (
     <div className="mt-20 px-10">
+      <Head>
+        <title>{username}</title>
+        <meta
+          name="description"
+          content="Here you can view your previous orders."
+        />
+        <meta property="og:title" content={username} />
+        <meta
+          property="og:description"
+          content="Here you can view your previous orders."
+        />
+        <meta property="og:image" content="https://kalind-ecommerce.com/" />
+        <meta
+          property="og:image:secure"
+          content="https://kalind-ecommerce.com/"
+        />
+        <meta
+          property="og:url"
+          content={`https://kalind-ecommerce.com/${username}`}
+        />
+        <meta name="keywords" content="user, orders, ecommrce, demo" />
+        <link
+          rel="canonical"
+          href={`https://kalind-ecommerce.com/${username}`}
+        />
+      </Head>
       <ul>
-        {user && user.orders.map((order, index) => (
-          <li className=" list-item" key={`order-${index}`}>
-            <ul key={`order-${order.id}-${order.products.length}`}>
-              {order.products.map((p, pIndex) => (
-                <li key={`product-${order.id}-${p.productId}`} className=" list-item">
-                  {p.product.name} - {p.amount}
-                </li>
-              ))}
-            </ul>
-          </li>
-        ))}
+        {user &&
+          user.orders.map((order, index) => (
+            <li className=" list-item" key={`order-${index}`}>
+              <ul key={`order-${order.id}-${order.products.length}`}>
+                {order.products.map((p, pIndex) => (
+                  <li
+                    key={`product-${order.id}-${p.productId}`}
+                    className=" list-item"
+                  >
+                    {p.product.name} - {p.amount}
+                  </li>
+                ))}
+              </ul>
+            </li>
+          ))}
       </ul>
     </div>
   );
@@ -67,13 +99,7 @@ export const getServerSideProps = async ({
 }) => {
   const user = await prisma.user.findFirst({
     where: {
-      OR: [
-        {
-          username: username,
-        },
-        { name: username },
-        { email: username },
-      ],
+      OR: [{ username: username }, { name: username }, { email: username }],
     },
     select: {
       id: true,
@@ -94,24 +120,6 @@ export const getServerSideProps = async ({
   });
 
   return {
-    props: { user },
+    props: { user, username },
   };
 };
-
-// export async function getStaticPaths() {
-//   const users = await prisma.user.findMany({
-//     select: {
-//       username: true,
-//       name: true,
-//       email: true,
-//     },
-//   });
-//   const paths = users.map((user) => ({
-//     params: { username: user.username || user.name || user.email },
-//   }));
-
-//   return {
-//     paths,
-//     fallback: false,
-//   };
-// }

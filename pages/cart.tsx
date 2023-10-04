@@ -2,15 +2,11 @@ import { useCart } from "@/context/CartContext";
 import React, { useState, useEffect, MouseEventHandler } from "react";
 import { Button } from "@/components/ui/button";
 import CartTable from "@/components/CartTable";
+import Head from "next/head";
 
 export default function Cart() {
-  const {
-    products,
-    clearCart,
-    count,
-    getTotalCost,
-    handlePurchase,
-  } = useCart();
+  const { products, clearCart, count, getTotalCost, handlePurchase } =
+    useCart();
   const [totalAmount, setTotalAmount] = useState(getTotalCost());
 
   useEffect(() => {
@@ -19,6 +15,37 @@ export default function Cart() {
 
   return (
     <div className="pt-10 pb-20 h-full px-10">
+      <Head>
+        <title>
+          Cart
+        </title>
+        <meta
+          name="description"
+          content="View and edit the items in your cart. Checkout using the button at the bottom right of the page."
+        />
+        <meta
+          property="og:title"
+          content="Cart - myEcommerce"
+        />
+        <meta
+          property="og:description"
+          content="View and edit the items in your cart. Checkout using the button at the bottom right of the page."
+        />
+        <meta
+          property="og:image"
+          content="https://kalind-ecommerce.com/next.svg"
+        />
+        <meta
+          property="og:image:secure"
+          content="https://kalind-ecommerce.com/next.svg"
+        />
+        <meta property="og:url" content="https://kalind-ecommerce.com/cart" />
+        <meta
+          name="keywords"
+          content="purchase, cart, ecommerce"
+        />
+        <link rel="canonical" href="https://kalind-ecommerce.com/cart" />
+      </Head>
       <div className="flex flex-row justify-end">
         <div>
           <button onClick={clearCart}>Empty Cart</button>

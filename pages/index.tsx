@@ -1,9 +1,9 @@
 import { GetStaticProps, InferGetServerSidePropsType } from "next";
 import Product from "@/components/Product";
 import prisma from "@/lib/prisma";
-import { useEffect, useState } from "react";
-import { addMissing } from "@/lib/utils/stripe";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
+import Head from "next/head";
 
 // const inter = Inter({ subsets: ["latin"] });
 type ProductType = {
@@ -23,7 +23,38 @@ export default function Home({
   const [page, setPage] = useState<number>(0);
 
   return (
-    <main className="flex flex-col-reverse justify-between md:justify-start md:flex-col items-center p-12 md:px-24 h-screen ">
+    <main className="flex flex-col-reverse justify-between md:justify-start md:flex-col items-center p-12 md:px-24 h-screen">
+      <Head>
+        <title>
+          Ecommerce demo website by Kalin Doychev
+        </title>
+        <meta
+          name="description"
+          content="This is a side project to practice my Web Dev Skill. For more information check out the about page."
+        />
+        <meta
+          property="og:title"
+          content="Ecommerce demo website by Kalin Doychev"
+        />
+        <meta
+          property="og:description"
+          content="This is a side project to practice my Web Dev Skill. For more information check out the about page."
+        />
+        <meta
+          property="og:image"
+          content="https://kalind-ecommerce.com/next.svg"
+        />
+        <meta
+          property="og:image:secure"
+          content="https://kalind-ecommerce.com/next.svg"
+        />
+        <meta property="og:url" content="https://kalind-ecommerce.com/" />
+        <meta
+          name="keywords"
+          content="demo, web dev, ecommerce"
+        />
+        <link rel="canonical" href="https://kalind-ecommerce.com/" />
+      </Head>
       <div className="flex flex-row w-full justify-end m-2">
         <div>
           <Button
@@ -33,7 +64,9 @@ export default function Home({
             Prev
           </Button>
         </div>
-        <div className="text-lg bold px-2 flex flex-col justify-center"><div className="h-fit">{page + 1}</div></div>
+        <div className="text-lg bold px-2 flex flex-col justify-center">
+          <div className="h-fit">{page + 1}</div>
+        </div>
         <div>
           <Button
             disabled={

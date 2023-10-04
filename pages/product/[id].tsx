@@ -9,6 +9,7 @@ import prisma from "@/lib/prisma";
 import Image from "next/image";
 import { Button } from "@/components/ui/button";
 import { useCart } from "@/context/CartContext";
+import Head from "next/head";
 
 type Product = {
   id: string;
@@ -20,13 +21,13 @@ type Product = {
 };
 
 const DEFAULT_PRODUCT: Product = {
-  id: '',
-  name: 'Not Found',
-  image: 'Not Found',
-  altText: 'Not Found',
-  description: 'Product was not found',
-  price: 0
-}
+  id: "",
+  name: "Not Found",
+  image: "Not Found",
+  altText: "Not Found",
+  description: "Product was not found",
+  price: 0,
+};
 
 interface Params extends ParsedUrlQuery {
   id: string;
@@ -36,17 +37,37 @@ type PathType = {
   params: {
     id: string;
   };
-}
+};
 
 const ProductPage = ({
   product,
 }: InferGetStaticPropsType<typeof getStaticProps>) => {
   const { addProduct } = useCart();
 
-  if (!product) return <div>Error</div>
+  if (!product) return <div>Error</div>;
 
   return (
     <div className="pt-10 px-4 flex flex-col gap-2 md:gap-4 h-full">
+      <Head>
+        <title>{product.name}</title>
+        <meta
+          name="description"
+          content={product.description}
+        />
+        <meta property="og:title" content={product.name} />
+        <meta
+          property="og:description"
+          content={product.description}
+        />
+        <meta property="og:image" content={`https://kalind-ecommerce.com${product.image}`} />
+        <meta
+          property="og:image:secure"
+          content={`https://kalind-ecommerce.com${product.image}`}
+        />
+        <meta property="og:url" content={`https://kalind-ecommerce.com/product/${product.id}`} />
+        <meta name="keywords" content={`product, ${product.name}, ecommrce, demo`} />
+        <link rel="canonical" href={`https://kalind-ecommerce.com/product/${product.id}`} />
+      </Head>
       <div className="font-bold text-lg md:text-xl">
         <h1>{product.name}</h1>
       </div>
@@ -61,9 +82,13 @@ const ProductPage = ({
           />
         </div>
         <div className="flex flex-col gap-4 px-2 pt-2 md:px-5 md:pt-5 lg:px-10 lg:pt-10 justify-betwen">
-          <div className="bg-white bg-opacity-70 p-2 md:p-4 rounded-lg">{product.description}</div>
+          <div className="bg-white bg-opacity-70 p-2 md:p-4 rounded-lg">
+            {product.description}
+          </div>
           <div className="flex flex-row justify-end gap-4">
-            <div className="flex flex-col justify-center">{(product.price / 100).toFixed(2)}€</div>
+            <div className="flex flex-col justify-center">
+              {(product.price / 100).toFixed(2)}€
+            </div>
             <div>
               <Button onClick={() => addProduct({ ...product, amount: 1 })}>
                 Add to cart
@@ -84,8 +109,8 @@ export const getStaticProps: GetStaticProps<{
     where: { id: id },
   });
   let product: Product = DEFAULT_PRODUCT;
-  if(prismaReq){
-    product = {...prismaReq, id: prismaReq.id, altText: prismaReq.altText}
+  if (prismaReq) {
+    product = { ...prismaReq, id: prismaReq.id, altText: prismaReq.altText };
   }
   return { props: { product: { ...product } } };
 };
