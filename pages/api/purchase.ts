@@ -5,7 +5,6 @@ import { authOptions } from "./auth/[...nextauth]";
 import stripe from "@/lib/utils/stripe";
 
 export default async function handler(request: NextApiRequest, response: NextApiResponse) {
-    const session = await getServerSession(request, response, authOptions)
     if (request.method !== 'POST') {
         response.status(400).send(JSON.stringify({ error: 'Only POST requests allowed on this route!' }))
         return
@@ -20,22 +19,45 @@ export default async function handler(request: NextApiRequest, response: NextApi
         }
     })
 
-    const stripeSession = await stripe.checkout.sessions.create({
-        customer_email: session?.user.email,
-        success_url: `${process.env.NEXTAUTH_URL}/purchase/success`,
-        cancel_url: `${process.env.NEXTAUTH_URL}/cart`,
-        line_items: products.map(p => ({ price: p.stripeId as string, quantity: body.filter(b => b.id === p.id)[0].amount })),
-        mode: 'payment',
-    });
+    try {
+        const session = await getServerSession(request, response, authOptions)
 
-    await prisma.user.update({
-        where: { id: session?.user.id },
-        data: { purchaseSession: stripeSession.id }
-    })
+        const stripeSession = await stripe.checkout.sessions.create({
+            customer_email: session?.user.email,
+            success_url: `${process.env.NEXTAUTH_URL}/purchase/success`,
+            cancel_url: `${process.env.NEXTAUTH_URL}/cart`,
+            line_items: products.map(p => ({ price: p.stripeId as string, quantity: body.filter(b => b.id === p.id)[0].amount })),
+            mode: 'payment',
+        });
 
-    if (session?.user && stripeSession.url) {
-        response.status(201).send(JSON.stringify({ redirectUrl: stripeSession.url }))
-        return
+        await prisma.user.update({
+            where: { id: session?.user.id },
+            data: { purchaseSession: stripeSession.id }
+        })
+
+        if (session?.user && stripeSession.url) {
+            response.status(201).send(JSON.stringify({ redirectUrl: stripeSession.url }))
+            return
+        }
+        response.status(401).send(JSON.stringify({ message: 'User must be logged in!' }))
+    } catch (e) {
+        console.log(e)
+        const stripeSession = await stripe.checkout.sessions.create({
+            success_url: `${process.env.NEXTAUTH_URL}/purchase/success`,
+            cancel_url: `${process.env.NEXTAUTH_URL}/cart`,
+            line_items: products.map(p => ({ price: p.stripeId as string, quantity: body.filter(b => b.id === p.id)[0].amount })),
+            mode: 'payment',
+        });
+
+        // await prisma.user.update({
+        //     where: { id: session?.user.id },
+        //     data: { purchaseSession: stripeSession.id }
+        // })
+
+        if (stripeSession.url) {
+            response.status(201).send(JSON.stringify({ redirectUrl: stripeSession.url }))
+            return
+        }
+        response.status(401).send(JSON.stringify({ message: 'User must be logged in!' }))
     }
-    response.status(401).send(JSON.stringify({ message: 'User must be logged in!' }))
 }
