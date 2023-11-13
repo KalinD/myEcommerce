@@ -19,45 +19,26 @@ export default async function handler(request: NextApiRequest, response: NextApi
         }
     })
 
-    try {
-        const session = await getServerSession(request, response, authOptions)
+    const session = await getServerSession(request, response, authOptions)
 
-        const stripeSession = await stripe.checkout.sessions.create({
-            customer_email: session?.user.email,
-            success_url: `${process.env.NEXTAUTH_URL}/purchase/success`,
-            cancel_url: `${process.env.NEXTAUTH_URL}/cart`,
-            line_items: products.map(p => ({ price: p.stripeId as string, quantity: body.filter(b => b.id === p.id)[0].amount })),
-            mode: 'payment',
-        });
+    const stripeSession = await stripe.checkout.sessions.create({
+        customer_email: session?.user.email,
+        success_url: `${process.env.NEXTAUTH_URL}/purchase/success`,
+        cancel_url: `${process.env.NEXTAUTH_URL}/cart`,
+        line_items: products.map(p => ({ price: p.stripeId as string, quantity: body.filter(b => b.id === p.id)[0].amount })),
+        mode: 'payment',
+    });
 
+    if (session?.user.id) {
         await prisma.user.update({
             where: { id: session?.user.id },
             data: { purchaseSession: stripeSession.id }
         })
-
-        if (session?.user && stripeSession.url) {
-            response.status(201).send(JSON.stringify({ redirectUrl: stripeSession.url }))
-            return
-        }
-        response.status(401).send(JSON.stringify({ message: 'User must be logged in!' }))
-    } catch (e) {
-        console.log(e)
-        const stripeSession = await stripe.checkout.sessions.create({
-            success_url: `${process.env.NEXTAUTH_URL}/purchase/success`,
-            cancel_url: `${process.env.NEXTAUTH_URL}/cart`,
-            line_items: products.map(p => ({ price: p.stripeId as string, quantity: body.filter(b => b.id === p.id)[0].amount })),
-            mode: 'payment',
-        });
-
-        // await prisma.user.update({
-        //     where: { id: session?.user.id },
-        //     data: { purchaseSession: stripeSession.id }
-        // })
-
-        if (stripeSession.url) {
-            response.status(201).send(JSON.stringify({ redirectUrl: stripeSession.url }))
-            return
-        }
-        response.status(401).send(JSON.stringify({ message: 'User must be logged in!' }))
     }
+
+    if (stripeSession.url) {
+        response.status(201).send(JSON.stringify({ redirectUrl: stripeSession.url }))
+        return
+    }
+    response.status(401).send(JSON.stringify({ message: 'User must be logged in!' }))
 }
