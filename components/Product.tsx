@@ -1,9 +1,8 @@
-import React, { useState, MouseEvent } from "react";
+import React from "react";
 import Image from "next/image";
 import { useCart } from "@/context/CartContext";
 // import Button from "./Button";
 import { Button } from "@/components/ui/button";
-import Link from "next/link";
 import { Card, CardContent, CardFooter, CardHeader } from "./ui/card";
 import { useRouter } from "next/router";
 
@@ -21,7 +20,7 @@ const Product = ({ id, name, image, description, altText, price }: Product) => {
   const router = useRouter();
 
   return (
-    <Card className=" flex flex-col justify-between text-center">
+    <Card className={`flex flex-col justify-between text-center animate-[fade-in_500ms_ease-in-out_1]`}>
       <CardHeader
         className="cursor-pointer"
         onClick={() => router.push(`/product/${id}`)}

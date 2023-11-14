@@ -1,17 +1,25 @@
 import { useCart } from "@/context/CartContext";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Head from "next/head";
 
 const Success = () => {
   const { confirmPurchase, clearCart } = useCart();
+  const [response, setResponse] = useState<null | {
+    message?: string;
+    error?: string;
+  }>(null);
 
   useEffect(() => {
-    try {
-      confirmPurchase();
-      clearCart();
-    } catch (e) {
-      console.log(e);
+    async function confirm() {
+      try {
+        const r: { message?: string; error?: string } = await confirmPurchase();
+        setResponse(r);
+        clearCart();
+      } catch (e) {
+        console.log(e);
+      }
     }
+    confirm();
   }, []);
 
   return (
@@ -32,11 +40,24 @@ const Success = () => {
           property="og:image:secure"
           content="https://kalind-ecommerce.com/"
         />
-        <meta property="og:url" content="https://kalind-ecommerce.com/success" />
+        <meta
+          property="og:url"
+          content="https://kalind-ecommerce.com/success"
+        />
         <meta name="keywords" content="purchase, ecommrce, demo" />
         <link rel="canonical" href="https://kalind-ecommerce.com/success" />
       </Head>
-      Thank you for your purchase!
+      <div className="p-4">
+        {!response && <div className="text-red-600">Loading...</div>}
+        {response && (
+          <div>
+            {response.error && (
+              <span className="text-red-600">{response.error}</span>
+            )}
+            {response.message && <span>{response.message}</span>}
+          </div>
+        )}
+      </div>
     </div>
   );
 };

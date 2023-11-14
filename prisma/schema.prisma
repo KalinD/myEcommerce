@@ -28,9 +28,10 @@ model Cart {
 
 model Order {
   id            String           @id @default(cuid())
-  userId        String
+  userEmail     String?
+  userId        String?
   stripeSession String           @unique
-  user          User             @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user          User?            @relation(fields: [userId], references: [id], onDelete: Cascade)
   products      OrderToProduct[]
 }
 

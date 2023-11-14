@@ -81,7 +81,7 @@ export default function Home({
       <div className="grid grid-cols-1 gap-2 md:grid-cols-2 lg:grid-cols-4 lg:gap-4 overflow-y-scroll overflow-x-hidden">
         {products
           .slice(PRODUCTS_PER_PAGE * page, PRODUCTS_PER_PAGE * (page + 1))
-          .map((product: ProductType) => (
+          .map((product: ProductType, index: number) => (
             <Product key={product.id} {...product} />
           ))}
       </div>

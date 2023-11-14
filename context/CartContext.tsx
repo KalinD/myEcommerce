@@ -4,7 +4,7 @@ import {
   createContext,
   useState,
   useContext,
-  useEffect,
+  useEffect
 } from "react";
 import { useCookies } from "react-cookie";
 
@@ -28,7 +28,10 @@ export interface CartState {
   getTotalCost: () => number;
   handlePurchase: () => void;
   tryToLoadFromCookies: () => void;
-  confirmPurchase: () => void;
+  confirmPurchase: () => Promise<{
+    message?: string | undefined;
+    error?: string | undefined;
+}>;
 }
 
 const defaultState: CartState = {
@@ -41,20 +44,24 @@ const defaultState: CartState = {
   getTotalCost: () => 0,
   handlePurchase: () => {},
   tryToLoadFromCookies: () => {},
-  confirmPurchase: () => {},
+  confirmPurchase: () => new Promise(() => ({message: "", error: ""})),
 };
 
 const CartContext = createContext<CartState>(defaultState);
 export default CartContext;
 
 export const CartProvider = ({ children }: { children: ReactElement }) => {
-  const [cookies, setCookie, removeCookie] = useCookies(["products"]);
+  const [cookies, setCookie, removeCookie] = useCookies(["products", "stripeSessionId"]);
   const [products, setProducts] = useState<Product[]>([]);
   const [count, setCount] = useState(0);
   const router = useRouter();
 
+  useEffect(() => {
+    tryToLoadFromCookies()
+  }, [products])
+
   const tryToLoadFromCookies = async () => {
-    if (cookies["products"] && count === 0) {
+    if (cookies.products && count === 0) {
       setProducts(cookies.products);
       setCount(products.reduce((acc, curP) => acc + curP.amount, 0));
     }
@@ -93,7 +100,8 @@ export const CartProvider = ({ children }: { children: ReactElement }) => {
 
     if (res.status === 201) {
       // created
-      const body = await res.json();
+      const body: {stripeSessionId: string, redirectUrl: string} = await res.json();
+      setCookie("stripeSessionId", body.stripeSessionId)
       router.push(body.redirectUrl);
     }
   };
@@ -122,8 +130,15 @@ export const CartProvider = ({ children }: { children: ReactElement }) => {
   };
 
   const confirmPurchase = async () => {
-    const res = await fetch("/api/purchase/success");
+    const res = await fetch("/api/purchase/success", {
+      method: "POST",
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({stripeSessionId: cookies.stripeSessionId})
+    });
     const data: { message?: string, error?: string} = await res.json();
+    return data
   };
 
   const removeAllProduct = (product: Product) => {

@@ -9,43 +9,57 @@ export default async function handler(
   response: NextApiResponse
 ) {
   const session = await getServerSession(request, response, authOptions);
-  if (!session?.user) {
-    response.status(401).send(JSON.stringify({ message: "Unauthorized!" }));
-  }
-
-  if (
-    await prisma.order.findUnique({
-      where: {
-        stripeSession: session?.user.purchaseSession as string,
-      },
-    })
-  ) {
+  // if (session?.user === undefined) {
+  //   // response.status(401).send(JSON.stringify({ message: "Unauthorized!" }));
+  //   response.status(200).send(JSON.stringify({message: ""}))
+  //   return
+  // }
+  const body: { stripeSessionId: string } = await request.body;
+  const foundOrder = await prisma.order.findFirst({
+    where: {
+      stripeSession: body.stripeSessionId,
+    },
+  })
+  if (foundOrder) {
     response
-      .status(404)
-      .send(JSON.stringify({ message: "Purchase was successful!" }));
+      .status(409)
+      .send(JSON.stringify({ message: "Purchase already exists!" }));
     return;
   }
+  
   const stripeSession = await stripe.checkout.sessions.retrieve(
-    session?.user.purchaseSession as string,
+    body.stripeSessionId,
     { expand: ["line_items"] }
   );
 
-  if (
-    request.method === "GET" &&
-    stripeSession.status?.toString() === "complete"
-  ) {
-    await prisma.order.create({
-      data: {
-        userId: session?.user?.id as string,
-        stripeSession: stripeSession.id,
-        products: {
-          create: stripeSession.line_items?.data.map((item) => ({
-            productId: item.price?.product as string,
-            amount: item.quantity as number,
-          })),
+  if (stripeSession.status?.toString() === "complete") {
+    if (session?.user === undefined) {
+      await prisma.order.create({
+        data: {
+          userEmail: stripeSession.customer_email,
+          stripeSession: stripeSession.id,
+          products: {
+            create: stripeSession.line_items?.data.map((item) => ({
+              productId: item.price?.product as string,
+              amount: item.quantity as number,
+            })),
+          },
         },
-      },
-    });
+      });
+    } else {
+      await prisma.order.create({
+        data: {
+          userId: session?.user?.id as string,
+          stripeSession: stripeSession.id,
+          products: {
+            create: stripeSession.line_items?.data.map((item) => ({
+              productId: item.price?.product as string,
+              amount: item.quantity as number,
+            })),
+          },
+        },
+      });
+    }
     response
       .status(200)
       .send(JSON.stringify({ message: "Purchase was successful!" }));

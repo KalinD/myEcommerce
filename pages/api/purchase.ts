@@ -37,7 +37,7 @@ export default async function handler(request: NextApiRequest, response: NextApi
     }
 
     if (stripeSession.url) {
-        response.status(201).send(JSON.stringify({ redirectUrl: stripeSession.url }))
+        response.status(201).send(JSON.stringify({ stripeSessionId: stripeSession.id, redirectUrl: stripeSession.url }))
         return
     }
     response.status(401).send(JSON.stringify({ message: 'User must be logged in!' }))
