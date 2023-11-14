@@ -23,7 +23,7 @@ export default async function handler(
   if (foundOrder) {
     response
       .status(409)
-      .send(JSON.stringify({ message: "Purchase already exists!" }));
+      .send(JSON.stringify({ message: "Purchase was successful!" }));
     return;
   }
   
