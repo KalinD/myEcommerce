@@ -12,9 +12,11 @@ const Success = () => {
   useEffect(() => {
     async function confirm() {
       try {
-        const r: { message?: string; error?: string } = await confirmPurchase();
-        setResponse(r);
-        clearCart();
+        const data: { message?: string; error?: string } = await confirmPurchase();
+        setResponse(data);
+        if(!data.error){
+          clearCart()
+        }
       } catch (e) {
         console.log(e);
       }

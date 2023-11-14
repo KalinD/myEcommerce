@@ -101,6 +101,7 @@ export const CartProvider = ({ children }: { children: ReactElement }) => {
     if (res.status === 201) {
       // created
       const body: {stripeSessionId: string, redirectUrl: string} = await res.json();
+      removeCookie("stripeSessionId")
       setCookie("stripeSessionId", body.stripeSessionId)
       router.push(body.redirectUrl);
     }
@@ -149,6 +150,7 @@ export const CartProvider = ({ children }: { children: ReactElement }) => {
 
   const clearCart = () => {
     setProducts([]);
+    removeCookie("products")
     setCookie("products", []);
     setCount(0);
   };
