@@ -9,11 +9,6 @@ export default async function handler(
   response: NextApiResponse
 ) {
   const session = await getServerSession(request, response, authOptions);
-  // if (session?.user === undefined) {
-  //   // response.status(401).send(JSON.stringify({ message: "Unauthorized!" }));
-  //   response.status(200).send(JSON.stringify({message: ""}))
-  //   return
-  // }
   const body: { stripeSessionId: string } = await request.body;
   const foundOrder = await prisma.order.findFirst({
     where: {
