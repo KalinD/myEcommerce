@@ -1,3 +1,4 @@
+import { updateProduct } from "@/lib/utils/stripe";
 import { useRouter } from "next/router";
 import {
   ReactElement,
@@ -108,18 +109,21 @@ export const CartProvider = ({ children }: { children: ReactElement }) => {
   };
 
   const removeOneProduct = (product: Product) => {
-    if (products.filter((p) => p.id === product.id)) {
-      const productsCopy = [...products];
-      const p = productsCopy.find((p) => (p.id = product.id));
-      if (p) {
-        p.amount -= 1;
-        if (p.amount <= 0) {
-          setProducts(productsCopy.filter((p) => p.id !== product.id));
-        } else {
-          setProducts(productsCopy);
-        }
+    const foundProducts = products.filter((p) => p.id === product.id)
+    if (foundProducts.length > 0) {
+      let updatedProducts = [...products];
+      if(foundProducts[0].amount > 1){
+        updatedProducts = updatedProducts.map(p => {
+          if(p.id === product.id){
+            p.amount--;
+          }
+          return p
+        })
+      } else {
+        updatedProducts = updatedProducts.filter(p => p.id !== product.id)
       }
-      setCookie("products", products);
+      setProducts(updatedProducts)
+      setCookie("products", updatedProducts);
       setCount((oldCount) => oldCount - 1);
     }
   };
@@ -144,8 +148,10 @@ export const CartProvider = ({ children }: { children: ReactElement }) => {
 
   const removeAllProduct = (product: Product) => {
     setCount((prevCount) => prevCount - product.amount);
-    setProducts((prevProducts) => prevProducts.filter((p) => p != product));
-    setCookie("products", products);
+    let updatedProducts = [...products]
+    updatedProducts = updatedProducts.filter(p => p.id !== product.id)
+    setProducts(updatedProducts);
+    setCookie("products", updatedProducts);
   };
 
   const clearCart = () => {
