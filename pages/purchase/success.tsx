@@ -1,7 +1,6 @@
 import { useCart } from "@/context/CartContext";
 import React, { useEffect, useState } from "react";
 import Head from "next/head";
-import type { Metadata } from 'next'
 
 const Success = () => {
   const { confirmPurchase, clearCart } = useCart();
@@ -38,17 +37,17 @@ const Success = () => {
           property="og:description"
           content="This page is visible if the purchase was successful."
         />
-        <meta property="og:image" content="https://www.kalind-ecommerce.com/" />
+        <meta property="og:image" content="https://kalind-ecommerce.com/" />
         <meta
           property="og:image:secure"
-          content="https://www.kalind-ecommerce.com/"
+          content="https://kalind-ecommerce.com/"
         />
         <meta
           property="og:url"
-          content="https://www.kalind-ecommerce.com/success"
+          content="https://kalind-ecommerce.com/success"
         />
         <meta name="keywords" content="purchase, ecommrce, demo" />
-        <link rel="canonical" href="https://www.kalind-ecommerce.com/success" />
+        <link rel="canonical" href="https://kalind-ecommerce.com/success" />
       </Head>
       <div className="p-4">
         {!response && <div className="text-red-600">Loading...</div>}

@@ -34,11 +34,11 @@ export default function Login() {
         <meta name="description" content="Login into your account using your email or username, and password. Or login using OAuth and your GitHub account." />
         <meta property="og:title" content="Login into your account" />
         <meta property="og:description" content="Login into your account using your email or username, and password. Or login using OAuth and your GitHub account." />
-        <meta property="og:image" content="https://www.kalind-ecommerce.com/" />
-        <meta property="og:image:secure" content="https://www.kalind-ecommerce.com/" />
-        <meta property="og:url" content="https://www.kalind-ecommerce.com/login" />
+        <meta property="og:image" content="https://kalind-ecommerce.com/" />
+        <meta property="og:image:secure" content="https://kalind-ecommerce.com/" />
+        <meta property="og:url" content="https://kalind-ecommerce.com/login" />
         <meta name="keywords" content="login, ecommrce, demo" />
-        <link rel="canonical" href="https://www.kalind-ecommerce.com/login" />
+        <link rel="canonical" href="https://kalind-ecommerce.com/login" />
       </Head>
       <form
         onSubmit={handleSubmit(async (data) => {

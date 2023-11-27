@@ -33,18 +33,18 @@ export default function Cart() {
         />
         <meta
           property="og:image"
-          content="https://www.kalind-ecommerce.com/next.svg"
+          content="https://kalind-ecommerce.com/next.svg"
         />
         <meta
           property="og:image:secure"
-          content="https://www.kalind-ecommerce.com/next.svg"
+          content="https://kalind-ecommerce.com/next.svg"
         />
-        <meta property="og:url" content="https://www.kalind-ecommerce.com/cart" />
+        <meta property="og:url" content="https://kalind-ecommerce.com/cart" />
         <meta
           name="keywords"
           content="purchase, cart, ecommerce"
         />
-        <link rel="canonical" href="https://www.kalind-ecommerce.com/cart" />
+        <link rel="canonical" href="https://kalind-ecommerce.com/cart" />
       </Head>
       <div className="flex flex-row justify-end">
         <div>

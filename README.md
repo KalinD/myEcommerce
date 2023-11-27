@@ -1,7 +1,7 @@
 # Kalin's E-Commerce Website
 
 ## Link
-The website is hosted at: https://www.kalind-ecommerce.com/
+The website is hosted at: https://kalind-ecommerce.com/
 
 ## Description 
 I decided to do this project to improve my skills in web development. I used [Next.js](https://nextjs.org/) with [TypeScript](https://www.typescriptlang.org/), [tailwindcss](https://tailwindcss.com/) for styling, [shadcn/ui](https://ui.shadcn.com/) for better styled components, [PostgreSQL](https://www.postgresql.org/) for a database, [Prisma](https://www.prisma.io/) as a database ORM, and [Stripe](https://stripe.com/) for payments. I chose this stack as I wanted to switch from JavaScript to TypeScript, and I wanted to improve my React.js/Next.js skills.
