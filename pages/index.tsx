@@ -42,18 +42,18 @@ export default function Home({
         />
         <meta
           property="og:image"
-          content="https://kalind-ecommerce.com/next.svg"
+          content="https://www.kalind-ecommerce.com/next.svg"
         />
         <meta
           property="og:image:secure"
-          content="https://kalind-ecommerce.com/next.svg"
+          content="https://www.kalind-ecommerce.com/next.svg"
         />
-        <meta property="og:url" content="https://kalind-ecommerce.com/" />
+        <meta property="og:url" content="https://www.kalind-ecommerce.com/" />
         <meta
           name="keywords"
           content="demo, web dev, ecommerce"
         />
-        <link rel="canonical" href="https://kalind-ecommerce.com/" />
+        <link rel="canonical" href="https://www.kalind-ecommerce.com/" />
       </Head>
       <div className="flex flex-row w-full justify-end m-2">
         <div>

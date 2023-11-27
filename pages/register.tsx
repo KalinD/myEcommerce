@@ -70,14 +70,14 @@ export default function Register() {
           property="og:description"
           content="Register an account for the website. You can also register using your GitHub account."
         />
-        <meta property="og:image" content="https://kalind-ecommerce.com/" />
+        <meta property="og:image" content="https://www.kalind-ecommerce.com/" />
         <meta
           property="og:image:secure"
-          content="https://kalind-ecommerce.com/"
+          content="https://www.kalind-ecommerce.com/"
         />
-        <meta property="og:url" content="https://kalind-ecommerce.com/login" />
+        <meta property="og:url" content="https://www.kalind-ecommerce.com/login" />
         <meta name="keywords" content="register, ecommrce, demo" />
-        <link rel="canonical" href="https://kalind-ecommerce.com/register" />
+        <link rel="canonical" href="https://www.kalind-ecommerce.com/register" />
       </Head>
       <form
         onSubmit={handleSubmit(async (data) => {

@@ -16,4 +16,4 @@ Disallow: /products
 User-agent: *
 Allow: /*
 
-Sitemap: https://kalind-ecommerce.com/sitemap.xml
+Sitemap: https://www.kalind-ecommerce.com/sitemap.xml

@@ -25,6 +25,8 @@ model Cart {
   userId   String
   users    User      @relation(fields: [userId], references: [id], onDelete: Cascade)
   products Product[] @relation("CartToProduct")
+
+  @@index([userId])
 }
 
 model Order {
@@ -34,6 +36,8 @@ model Order {
   stripeSession String           @unique
   user          User?            @relation(fields: [userId], references: [id], onDelete: Cascade)
   products      OrderToProduct[]
+
+  @@index([userId])
 }
 
 model OrderToProduct {
@@ -45,6 +49,8 @@ model OrderToProduct {
   amount    Int
 
   @@id([orderId, productId])
+  @@index([productId])
+  @@index([orderId])
 }
 
 model Account {
@@ -63,6 +69,7 @@ model Account {
   user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([provider, providerAccountId])
+  @@index([userId])
 }
 
 model Session {
@@ -71,6 +78,8 @@ model Session {
   userId       String
   expires      DateTime
   user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
 }
 
 enum UserRole {

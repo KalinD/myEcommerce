@@ -45,14 +45,14 @@ const Products = ({ ps }: ProductProps) => {
           property="og:description"
           content="Page to view and edit existing products. Only admins are allowed on this page!"
         />
-        <meta property="og:image" content="https://kalind-ecommerce.com/" />
+        <meta property="og:image" content="https://www.kalind-ecommerce.com/" />
         <meta
           property="og:image:secure"
-          content="https://kalind-ecommerce.com/"
+          content="https://www.kalind-ecommerce.com/"
         />
-        <meta property="og:url" content="https://kalind-ecommerce.com/products" />
+        <meta property="og:url" content="https://www.kalind-ecommerce.com/products" />
         <meta name="keywords" content="products, ecommrce, demo" />
-        <link rel="canonical" href="https://kalind-ecommerce.com/products" />
+        <link rel="canonical" href="https://www.kalind-ecommerce.com/products" />
       </Head>
       {isOpen && (
         <Modal onClose={() => setIsOpen(false)}>

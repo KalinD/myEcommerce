@@ -54,19 +54,19 @@ const UserPage = ({ user, username }: { user: User; username: string }) => {
           property="og:description"
           content="Here you can view your previous orders."
         />
-        <meta property="og:image" content="https://kalind-ecommerce.com/" />
+        <meta property="og:image" content="https://www.kalind-ecommerce.com/" />
         <meta
           property="og:image:secure"
-          content="https://kalind-ecommerce.com/"
+          content="https://www.kalind-ecommerce.com/"
         />
         <meta
           property="og:url"
-          content={`https://kalind-ecommerce.com/${username}`}
+          content={`https://www.kalind-ecommerce.com/${username}`}
         />
         <meta name="keywords" content="user, orders, ecommrce, demo" />
         <link
           rel="canonical"
-          href={`https://kalind-ecommerce.com/${username}`}
+          href={`https://www.kalind-ecommerce.com/${username}`}
         />
       </Head>
       <ul>

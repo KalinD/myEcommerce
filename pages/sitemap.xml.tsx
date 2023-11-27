@@ -13,10 +13,10 @@ function generateSiteMap(products: {
    <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
      <!--We manually set the two URLs we know already-->
      <url>
-       <loc>https://kalind-ecommerce.com/</loc>
+       <loc>https://www.kalind-ecommerce.com/</loc>
      </url>
      <url>
-       <loc>https://kalind-ecommerce.com/cart</loc>
+       <loc>https://www.kalind-ecommerce.com/cart</loc>
      </url>
      
      ${products

@@ -59,14 +59,14 @@ const ProductPage = ({
           property="og:description"
           content={product.description}
         />
-        <meta property="og:image" content={`https://kalind-ecommerce.com${product.image}`} />
+        <meta property="og:image" content={`https://www.kalind-ecommerce.com${product.image}`} />
         <meta
           property="og:image:secure"
-          content={`https://kalind-ecommerce.com${product.image}`}
+          content={`https://www.kalind-ecommerce.com${product.image}`}
         />
-        <meta property="og:url" content={`https://kalind-ecommerce.com/product/${product.id}`} />
+        <meta property="og:url" content={`https://www.kalind-ecommerce.com/product/${product.id}`} />
         <meta name="keywords" content={`product, ${product.name}, ecommrce, demo`} />
-        <link rel="canonical" href={`https://kalind-ecommerce.com/product/${product.id}`} />
+        <link rel="canonical" href={`https://www.kalind-ecommerce.com/product/${product.id}`} />
       </Head>
       <div className="font-bold text-lg md:text-xl">
         <h1>{product.name}</h1>

@@ -51,14 +51,14 @@ const About = () => {
           property="og:description"
           content="Learn more about this website"
         />
-        <meta property="og:image" content="https://kalind-ecommerce.com/" />
+        <meta property="og:image" content="https://www.kalind-ecommerce.com/" />
         <meta
           property="og:image:secure"
-          content="https://kalind-ecommerce.com/"
+          content="https://www.kalind-ecommerce.com/"
         />
-        <meta property="og:url" content="https://kalind-ecommerce.com/about" />
+        <meta property="og:url" content="https://www.kalind-ecommerce.com/about" />
         <meta name="keywords" content="about, web dev, ecommerce" />
-        <link rel="canonical" href="https://kalind-ecommerce.com/about" />
+        <link rel="canonical" href="https://www.kalind-ecommerce.com/about" />
       </Head>
       <section className="flex flex-col gap-2">
         <div>
