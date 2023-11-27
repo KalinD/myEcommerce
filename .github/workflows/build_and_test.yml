@@ -9,7 +9,7 @@ jobs:
     runs-on: self-hosted
     steps:
       - name: Get latest commit
-        run: git pull
+        run: git pull --rebase
       - name: Clean Install
         run: npm ci
       - name: Build project
