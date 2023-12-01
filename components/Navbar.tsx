@@ -32,7 +32,7 @@ const Navbar = () => {
   return (
     <nav>
       {isMobile && (
-        <div className="fixed z-50 top-2 right-2 cursor-pointer">
+        <div onClick={() => setIsOpen(!isOpen)}  className="fixed z-50 top-2 right-2 cursor-pointer">
           <HamburgerIcon isOpen={isOpen}/>
         </div>
       )}

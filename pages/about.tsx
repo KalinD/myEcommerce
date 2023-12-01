@@ -60,7 +60,7 @@ const About = () => {
         <meta name="keywords" content="about, web dev, ecommerce" />
         <link rel="canonical" href="https://kalind-ecommerce.com/about" />
       </Head>
-      <section className="flex flex-col gap-2">
+      <section className="flex flex-col gap-2 pb-4 md:pb-0">
         <div>
           <h1 className="text-2xl md:text-3xl lg:text-4xl">
             About this Webste
@@ -90,8 +90,8 @@ const About = () => {
             </p>
           </div>
           <div className="flex flex-col items-center gap-6 md:grid md:grid-rows-3 md:grid-cols-5 md:gap-2 w-full md:w-1/2">
-            {images.map((image) => (
-              <>
+            {images.map((image, index) => (
+              <React.Fragment key={`image-${index}`}>
                 <div className="w-full h-full relative ">
                   <Link href={image.link} className="flex justify-center">
                     <Image
@@ -104,7 +104,7 @@ const About = () => {
                   </Link>
                 </div>
                 <div></div>
-              </>
+              </React.Fragment>
             ))}
           </div>
         </div>
