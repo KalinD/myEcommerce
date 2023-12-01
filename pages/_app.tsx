@@ -5,6 +5,7 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import { SessionProvider } from "next-auth/react";
 import { ThemeProvider } from "@/components/theme-provider";
+import { Analytics } from "@vercel/analytics/react";
 
 export default function App({
   Component,
@@ -22,6 +23,7 @@ export default function App({
           <>
             <Navbar />
             <Component {...pageProps} />
+            <Analytics />
             <Footer />
           </>
         </CartProvider>
