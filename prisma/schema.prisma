@@ -10,7 +10,7 @@ datasource db {
 
 model Product {
   id          String           @id @default(cuid())
-  stripeId    String?
+  stripeId    String           @unique
   name        String           @db.VarChar(200)
   image       String
   altText     String           @db.VarChar(200)
@@ -25,6 +25,8 @@ model Cart {
   userId   String
   users    User      @relation(fields: [userId], references: [id], onDelete: Cascade)
   products Product[] @relation("CartToProduct")
+
+  @@index([userId])
 }
 
 model Order {
@@ -34,17 +36,21 @@ model Order {
   stripeSession String           @unique
   user          User?            @relation(fields: [userId], references: [id], onDelete: Cascade)
   products      OrderToProduct[]
+
+  @@index([userId])
 }
 
 model OrderToProduct {
   order     Order   @relation(fields: [orderId], references: [id])
   orderId   String
-  product   Product @relation(fields: [productId], references: [id])
-  productId String
+  product   Product @relation(fields: [stripeId], references: [stripeId])
+  stripeId String
 
-  amount    Int
+  amount Int
 
-  @@id([orderId, productId])
+  @@id([orderId, stripeId])
+  @@index([orderId])
+  @@index([stripeId])
 }
 
 model Account {
@@ -63,6 +69,7 @@ model Account {
   user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([provider, providerAccountId])
+  @@index([userId])
 }
 
 model Session {
@@ -71,6 +78,8 @@ model Session {
   userId       String
   expires      DateTime
   user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
 }
 
 enum UserRole {

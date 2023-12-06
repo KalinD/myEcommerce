@@ -41,6 +41,7 @@ type User = {
 };
 
 const UserPage = ({ user, username }: { user: User; username: string }) => {
+  console.log(user)
   return (
     <div className="mt-20 px-10">
       <Head>

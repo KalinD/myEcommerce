@@ -29,6 +29,7 @@ export default async function handler(
 
   if (stripeSession.status?.toString() === "complete") {
     if (session?.user === undefined) {
+      console.log(stripeSession.line_items?.data)
       await prisma.order.create({
         data: {
           userEmail: stripeSession.customer_email,
@@ -42,13 +43,14 @@ export default async function handler(
         },
       });
     } else {
+      console.log(stripeSession.line_items?.data)
       await prisma.order.create({
         data: {
           userId: session?.user?.id as string,
           stripeSession: stripeSession.id,
           products: {
             create: stripeSession.line_items?.data.map((item) => ({
-              productId: item.price?.product as string,
+              productId: item.price?.id as string,
               amount: item.quantity as number,
             })),
           },
