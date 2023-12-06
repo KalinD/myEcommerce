@@ -66,6 +66,7 @@ export default async function handler(request: NextApiRequest, response: NextApi
             altText: data.fields.altText[0],
             description: data.fields.description[0],
             price: Number(data.fields.price[0]),
+            stripeId: "", // Stripe Id
             image: `${IMAGES_URL}/${data.files.image[0].originalFilename}`,
         },
     });

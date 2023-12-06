@@ -37,6 +37,7 @@ async function main() {
             data: {
                 name: product.title,
                 image: `${IMAGES_URL}/${pngFileName}`,
+                stripeId: "", // Stripe Id not available
                 price: priceInUnits,
                 description: product.description,
                 altText: product.title

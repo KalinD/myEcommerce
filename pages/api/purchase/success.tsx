@@ -36,7 +36,7 @@ export default async function handler(
           stripeSession: stripeSession.id,
           products: {
             create: stripeSession.line_items?.data.map((item) => ({
-              productId: item.price?.product as string,
+              stripeId: item.price?.product as string,
               amount: item.quantity as number,
             })),
           },
@@ -50,7 +50,7 @@ export default async function handler(
           stripeSession: stripeSession.id,
           products: {
             create: stripeSession.line_items?.data.map((item) => ({
-              productId: item.price?.id as string,
+              stripeId: item.price?.id as string,
               amount: item.quantity as number,
             })),
           },
